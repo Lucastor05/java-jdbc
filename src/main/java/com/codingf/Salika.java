@@ -45,12 +45,13 @@ public class Salika {
         boolean restart = true;
 
         while(restart) {
-            System.out.println("\n\n1. actor\n2. actor_info\n3. address\n4. category\n5. city\n6. country\n7. customer\n8. customer_list\n9. film\n10. film_actor\n11. film_category\n12. film_list\n13. film_text\n14. inventory\n15. language\n16. nicer_but_slower_film_list\n17. payment\n18. rental\n19. sales_by_film_category\n20. sales_by_store\n21. staff\n22. staff_list\n23. store\n24. Exit");
-            System.out.println("Entrez votre choix :");
-            Scanner choice = new Scanner(System.in);
-
             boolean valide = false;
             while (!valide) {
+
+                System.out.println("\n\n1. actor\n2. actor_info\n3. address\n4. category\n5. city\n6. country\n7. customer\n8. customer_list\n9. film\n10. film_actor\n11. film_category\n12. film_list\n13. film_text\n14. inventory\n15. language\n16. nicer_but_slower_film_list\n17. payment\n18. rental\n19. sales_by_film_category\n20. sales_by_store\n21. staff\n22. staff_list\n23. store\n24. Exit");
+                System.out.println("Entrez votre choix :");
+                Scanner choice = new Scanner(System.in);
+
                 if (choice.hasNextInt()) {
                     int choix = choice.nextInt();
                     if (choix <= 24 || choix >= 1) {
@@ -86,7 +87,7 @@ public class Salika {
                     }else if(choix == 2){
                         afficheCountry(connection);
                     }else if(choix == 3){
-
+                        afficheFilm(connection);
                     }else if(choix == 4){
 
                     }else if(choix == 5){
@@ -123,6 +124,19 @@ public class Salika {
             for(int i = 1; i <= resultMeta.getColumnCount(); i++) {
                 System.out.println("Ville: "+ city.getObject(i).toString());
             }
+        }
+    }
+
+    public static void afficheFilm(Connection connection) throws SQLException{
+        Statement stmt= connection.createStatement();
+
+        ResultSet filmTitle= stmt.executeQuery("SELECT * FROM film");
+
+        System.out.println();
+        while(filmTitle.next()){
+            System.out.println("Title: "+ filmTitle.getString(2));
+            System.out.println("Description: "+ filmTitle.getString(3));
+            System.out.println("========================================================================================================");
         }
     }
 }
