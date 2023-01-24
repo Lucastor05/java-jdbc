@@ -87,7 +87,7 @@ public class Salika {
                     }else if(choix == 2){
                         afficheCountry(connection);
                     }else if(choix == 3){
-                        afficheFilm(connection);
+                        afficheNicerFilm(connection);
                     }else if(choix == 4){
 
                     }else if(choix == 5){
@@ -134,9 +134,140 @@ public class Salika {
 
         System.out.println();
         while(filmTitle.next()){
+            System.out.println("film_id: "+ filmTitle.getString(1));
             System.out.println("Title: "+ filmTitle.getString(2));
             System.out.println("Description: "+ filmTitle.getString(3));
+            System.out.println("original_language_id: "+ filmTitle.getString(6));
+            System.out.println("rental_duration: "+ filmTitle.getString(7));
+            System.out.println("rental_rate: "+ filmTitle.getString(8));
+            System.out.println("length: "+ filmTitle.getString(9));
+            System.out.println("replacement_cost: "+ filmTitle.getString(10));
+            System.out.println("rating: "+ filmTitle.getString(11));
+            System.out.println("special_features: "+ filmTitle.getString(12));
+            System.out.println("last_update: "+ filmTitle.getString(13));
+            System.out.println("release_year: "+ filmTitle.getString(4));
+            System.out.println("language_id: "+ filmTitle.getString(5));
+
             System.out.println("========================================================================================================");
         }
     }
+
+    public static void afficheFilmActor(Connection connection) throws SQLException{
+        Statement stmt= connection.createStatement();
+
+        ResultSet filmActor= stmt.executeQuery("SELECT * FROM film_actor");
+
+        System.out.println();
+        while(filmActor.next()){
+            System.out.println("actor_id: "+ filmActor.getString(1));
+            System.out.println("film_id: "+ filmActor.getString(2));
+            System.out.println("last_update: "+ filmActor.getString(3));
+            System.out.println("========================================================================================================");
+        }
+    }
+
+    public static void afficheFilmCate(Connection connection) throws SQLException{
+        Statement stmt= connection.createStatement();
+
+        ResultSet filmCate= stmt.executeQuery("SELECT * FROM film_category");
+
+        System.out.println();
+        while(filmCate.next()){
+            System.out.println("film_id: "+ filmCate.getString(1));
+            System.out.println("category_id: "+ filmCate.getString(2));
+            System.out.println("last_update: "+ filmCate.getString(3));
+            System.out.println("========================================================================================================");
+        }
+    }
+
+    public static void afficheFilmList(Connection connection) throws SQLException{
+        Statement stmt= connection.createStatement();
+
+        ResultSet filmList= stmt.executeQuery("SELECT * FROM film_list");
+
+        System.out.println();
+        while(filmList.next()){
+            System.out.println("FID: "+ filmList.getString(1));
+            System.out.println("title: "+ filmList.getString(2));
+            System.out.println("description: "+ filmList.getString(3));
+            System.out.println("category: "+ filmList.getString(4));
+            System.out.println("price: "+ filmList.getString(5));
+            System.out.println("length: "+ filmList.getString(6));
+            System.out.println("rating: "+ filmList.getString(7));
+            System.out.println("actors: "+ filmList.getString(8));
+
+            System.out.println("========================================================================================================");
+        }
+    }
+
+    public static void afficheFilmText(Connection connection) throws SQLException{
+        Statement stmt= connection.createStatement();
+
+        ResultSet filmText= stmt.executeQuery("SELECT * FROM film_text");
+
+        System.out.println();
+        while(filmText.next()){
+            System.out.println("film_id: "+ filmText.getString(1));
+            System.out.println("title: "+ filmText.getString(2));
+            System.out.println("description: "+ filmText.getString(3));
+
+            System.out.println("========================================================================================================");
+        }
+    }
+
+    public static void afficheInventory(Connection connection) throws SQLException{
+        Statement stmt= connection.createStatement();
+
+        ResultSet inventory= stmt.executeQuery("SELECT * FROM inventory");
+
+        System.out.println();
+        while(inventory.next()){
+            System.out.println("inventory_id: "+ inventory.getString(1));
+            System.out.println("film_id: "+ inventory.getString(2));
+            System.out.println("store_id: "+ inventory.getString(3));
+            System.out.println("last_update: "+ inventory.getString(4));
+
+            System.out.println("========================================================================================================");
+        }
+    }
+
+    public static void afficheLanguage(Connection connection) throws SQLException{
+        Statement stmt= connection.createStatement();
+
+        ResultSet language= stmt.executeQuery("SELECT * FROM language");
+
+        System.out.println();
+        while(language.next()){
+            System.out.println("language_id: "+ language.getString(1));
+            System.out.println("name: "+ language.getString(2));
+            System.out.println("last_update: "+ language.getString(3));
+
+            System.out.println("========================================================================================================");
+        }
+    }
+
+    public static void afficheNicerFilm(Connection connection) throws SQLException{
+        Statement stmt= connection.createStatement();
+
+        ResultSet NicerFilm= stmt.executeQuery("SELECT * FROM nicer_but_slower_film_list");
+
+        System.out.println();
+        while(NicerFilm.next()){
+            System.out.println("FID: "+ NicerFilm.getString(1));
+            System.out.println("title: "+ NicerFilm.getString(2));
+            System.out.println("description: "+ NicerFilm.getString(3));
+            System.out.println("category: "+ NicerFilm.getString(4));
+            System.out.println("price: "+ NicerFilm.getString(5));
+            System.out.println("length: "+ NicerFilm.getString(6));
+            System.out.println("rating: "+ NicerFilm.getString(7));
+            System.out.println("actors: "+ NicerFilm.getString(8));
+
+            System.out.println("========================================================================================================");
+        }
+    }
+
+
+
+
+
 }
