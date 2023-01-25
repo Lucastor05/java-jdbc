@@ -211,38 +211,66 @@ public class Salika {
     }
 
     public static void addStaff(Connection connection) throws SQLException {
-        boolean newStaffValide = false;
-        while(!newStaffValide) {
-            System.out.print("Entrez les données de la personne rejoignant l'équipe : ");
-            Scanner newStaff = new Scanner(System.in);
+        PreparedStatement statement = null;
+        ResultSet result = null;
+        Scanner scanner = new Scanner(System.in);
 
-            if (!newStaff.hasNextInt()) {
-                String name = newStaff.next();
-                String query = "SELECT * FROM store WHERE first_name = ? AND last_name = ?;";
-                PreparedStatement statement = connection.prepareStatement(query);
-                statement.setString(1, name);
-                ResultSet resultSet = statement.executeQuery();
+        try {
+            // Connexion à la base de données
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/database_name", "username", "password");
+            // Demande à l'utilisateur pour les valeurs
+            System.out.print("Entrez le prénom de l'employé : ");
+            String first_name = scanner.nextLine();
+            System.out.print("Entrez son nom : ");
+            String last_name = scanner.nextLine();
+            System.out.print("Entrez son email : ");
+            String email = scanner.nextLine();
+            System.out.print("Entrez son pseudonyme : ");
+            String username = scanner.nextLine();
+            System.out.print("Entrez son mot de passe : ");
+            String password = scanner.nextLine();
 
-                if (resultSet.next()) {
-                    System.err.println("Erreur: Le pays existe déjà !!!");
-                } else {
 
-                    query = "INSERT INTO staff (first_name, last_name, email, store_id, username, password) VALUES (?);";
-                    statement = connection.prepareStatement(query);
-                    statement.setString(1, name);
+            // Check if the actor already exists
+            String sql = "SELECT * FROM staff WHERE first_name = ? AND last_name = ? AND email = ? ";
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, first_name);
+            statement.setString(2, last_name);
+            statement.setString(3, email);
+            result = statement.executeQuery();
+            if (result.next()) {
+                System.out.println("Actor already exists in the table.");
+                return;
+            }
+            // Create the SQL statement
+            sql = "INSERT INTO staff (first_name, last_name, email, active, username, password) VALUES (?, ?, ?)";
+            statement = connection.prepareStatement(sql);
 
-                    int result = statement.executeUpdate();
+            // Bind the variables to the prepared statement
+            statement.setString(1, first_name);
+            statement.setString(2, last_name);
+            statement.setString(3, email);
 
-                    if (result == 1) {
-                        System.out.println("\nLa valeur a été insérée avec succès dans la table country");
-                    } else {
-                        System.err.println("\nErreur: lors de l'insertion de la valeur dans la table country");
-                    }
+            // Execute the statement
+            statement.executeUpdate();
 
-                    newStaffValide = true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Close the connection, statement, and result set
+            try {
+                if (result != null) {
+                    result.close();
                 }
-            }else{
-                System.err.println("\nErreur: Le nom ne peut etre un numéro");
+                if (statement != null) {
+                    statement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+                scanner.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
     }
