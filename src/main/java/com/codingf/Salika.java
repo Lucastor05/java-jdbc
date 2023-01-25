@@ -853,7 +853,7 @@ public class Salika {
 
                             valide = true;
                         }else if(choix == 2){
-                            afficheCity(connection);
+                            afficheCustomerList(connection);
                             valide = true;
                         }else if(choix == 3){
 
