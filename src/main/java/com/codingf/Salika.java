@@ -201,11 +201,49 @@ public class Salika {
             System.out.println("first_name: " + staff.getString(2));
             System.out.println("last_name: " + staff.getString(3));
             System.out.println("email: " + staff.getString(6));
+            System.out.println("store_id: " + staff.getString(7));
             System.out.println("active: " + staff.getString(8));
             System.out.println("username: " + staff.getString(9));
             System.out.println("password: " + staff.getString(10));
             System.out.println("last_update: " + staff.getString(11));
             System.out.println("========================================================================================================");
+        }
+    }
+
+    public static void addStaff(Connection connection) throws SQLException {
+        boolean newStaffValide = false;
+        while(!newStaffValide) {
+            System.out.print("Entrez les données de la personne rejoignant l'équipe : ");
+            Scanner newStaff = new Scanner(System.in);
+
+            if (!newStaff.hasNextInt()) {
+                String name = newStaff.next();
+                String query = "SELECT * FROM store WHERE first_name = ? AND last_name = ?;";
+                PreparedStatement statement = connection.prepareStatement(query);
+                statement.setString(1, name);
+                ResultSet resultSet = statement.executeQuery();
+
+                if (resultSet.next()) {
+                    System.err.println("Erreur: Le pays existe déjà !!!");
+                } else {
+
+                    query = "INSERT INTO staff (first_name, last_name, email, store_id, username, password) VALUES (?);";
+                    statement = connection.prepareStatement(query);
+                    statement.setString(1, name);
+
+                    int result = statement.executeUpdate();
+
+                    if (result == 1) {
+                        System.out.println("\nLa valeur a été insérée avec succès dans la table country");
+                    } else {
+                        System.err.println("\nErreur: lors de l'insertion de la valeur dans la table country");
+                    }
+
+                    newStaffValide = true;
+                }
+            }else{
+                System.err.println("\nErreur: Le nom ne peut etre un numéro");
+            }
         }
     }
 
