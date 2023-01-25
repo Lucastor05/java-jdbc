@@ -87,7 +87,7 @@ public class Salika {
                     }else if(choix == 2){
                         afficheCountry(connection);
                     }else if(choix == 3){
-                        afficheNicerFilm(connection);
+                        addFilm(connection);
                     }else if(choix == 4){
 
                     }else if(choix == 5){
@@ -127,6 +127,8 @@ public class Salika {
         }
     }
 
+
+    /*film*/
     public static void afficheFilm(Connection connection) throws SQLException{
         Statement stmt= connection.createStatement();
 
@@ -151,7 +153,267 @@ public class Salika {
             System.out.println("========================================================================================================");
         }
     }
+    public static void addFilm(Connection connection) throws SQLException {
 
+        String title;
+        String description;
+        int release_year;
+        int language_id;
+        int original_language_id;
+        float rental_duration;
+        float rental_rate;
+        int length;
+        float replacement_cost;
+        String rating;
+        String special_features;
+
+        /*loop pour film*/
+        boolean newFilmValide = false;
+        while(!newFilmValide) {
+
+            /*le title*/
+            System.out.println("Entrez le title de votre film: ");
+            Scanner newTitle = new Scanner(System.in);
+
+            /*check si il y a un titre et enregistre*/
+            if (newTitle.hasNext()) {
+                title = newTitle.next().toUpperCase();
+
+
+
+
+                /*loop pour la description*/
+                boolean newFilmDescription = false;
+                while(!newFilmDescription) {
+
+                    /*la description*/
+                    System.out.println("Entrez la description de votre film: ");
+                    Scanner newDescription = new Scanner(System.in);
+
+                    /*check si il y a une description et enregistre*/
+                    if (newDescription.hasNext()) {
+                        description = newDescription.next();
+
+
+
+
+                        /*loop pour le release year*/
+                        boolean newFilmReleaseYear = false;
+                        while(!newFilmReleaseYear) {
+
+                            /*le release year*/
+                            System.out.println("Entrez le release year: ");
+                            Scanner newReleaseYear = new Scanner(System.in);
+
+                            /*check si il y a une date et enregistre*/
+                            if (newReleaseYear.hasNextInt()) {
+                                release_year = newReleaseYear.nextInt();
+                                if (release_year > 1800 && release_year < 9999) {
+
+
+
+                                    /*loop pour le language id*/
+                                    boolean newFilmLanguageId = false;
+                                    while (!newFilmLanguageId) {
+
+                                        /*le language id*/
+                                        System.out.println("Entrez le language id: ");
+                                        Scanner newLanguageId = new Scanner(System.in);
+
+                                        /*check si il y a un language id et enregistre*/
+                                        if (newLanguageId.hasNextInt()) {
+                                            language_id = newLanguageId.nextInt();
+
+
+
+                                            /*loop pour le original language id*/
+                                            boolean newFilmOriginalLanguage = false;
+                                            while (!newFilmOriginalLanguage) {
+
+                                                /*le original language id*/
+                                                System.out.println("Entrez le original language id: ");
+                                                Scanner newOriginalLanguageId = new Scanner(System.in);
+
+                                                /*check si il y a un original language id et enregistre*/
+                                                if (newOriginalLanguageId.hasNextInt()) {
+                                                    original_language_id = newOriginalLanguageId.nextInt();
+
+
+
+
+                                                    /*loop pour le rental duration*/
+                                                    boolean newFilmRentalDuration = false;
+                                                    while (!newFilmRentalDuration) {
+
+                                                        /*le rental duration*/
+                                                        System.out.println("Entrez le rental duration: ");
+                                                        Scanner newRentalDuration = new Scanner(System.in);
+
+                                                        /*check si il y a un rental duration et enregistre*/
+                                                        if (newRentalDuration.hasNextInt()) {
+                                                            rental_duration = newRentalDuration.nextInt();
+
+
+
+
+                                                            //loop pour rental rate
+                                                            boolean newFilmRentalRate = false;
+                                                            while (!newFilmRentalRate) {
+
+                                                                /*le rental rate*/
+                                                                System.out.println("Entrez le rental rate: ");
+                                                                Scanner newRentalRate = new Scanner(System.in);
+
+                                                                /*check si il y a un rental rate et enregistre*/
+                                                                if (newRentalRate.hasNextFloat()) {
+                                                                    rental_rate = newRentalRate.nextFloat();
+
+
+
+                                                                    //loop pour length
+                                                                    boolean newFilmLength = false;
+                                                                    while (!newFilmLength) {
+
+                                                                        /*le length*/
+                                                                        System.out.println("Entrez le length: ");
+                                                                        Scanner newLength = new Scanner(System.in);
+
+                                                                        /*check si il y a un length et enregistre*/
+                                                                        if (newLength.hasNextInt()) {
+                                                                            length = newLength.nextInt();
+
+
+
+
+                                                                            //loop pour replacement cost
+                                                                            boolean newFilmReplacementCost = false;
+                                                                            while (!newFilmReplacementCost) {
+
+                                                                                /*le replacement cost*/
+                                                                                System.out.println("Entrez le replacement cost: ");
+                                                                                Scanner newReplacementCost = new Scanner(System.in);
+
+                                                                                /*check si il y a un replacement cost et enregistre*/
+                                                                                if (newReplacementCost.hasNextFloat()) {
+                                                                                    replacement_cost = newReplacementCost.nextFloat();
+
+
+
+
+                                                                                    //loop pour rating
+                                                                                    boolean newFilmRating = false;
+                                                                                    while (!newFilmRating) {
+
+                                                                                        /*le rating*/
+                                                                                        System.out.println("Entrez le rating: ");
+                                                                                        Scanner newRating = new Scanner(System.in);
+
+                                                                                        /*check si il y a un rating et enregistre*/
+                                                                                        if (newRating.hasNext()) {
+                                                                                            rating = newRating.next();
+
+
+
+
+                                                                                            //loop pour speciales features
+                                                                                            boolean newFilmSpecialFeats = false;
+                                                                                            while (!newFilmSpecialFeats) {
+
+                                                                                                /*le replacement cost*/
+                                                                                                System.out.println("Entrez les speciales features: ");
+                                                                                                Scanner newSpecialFeats = new Scanner(System.in);
+
+                                                                                                /*check si il y a les speciales features et enregistre*/
+                                                                                                if (newSpecialFeats.hasNext()) {
+                                                                                                    special_features = newSpecialFeats.next();
+
+
+
+                                                                                                    String query = "SELECT * FROM film WHERE title = ?";
+                                                                                                    PreparedStatement statement = connection.prepareStatement(query);
+                                                                                                    statement.setString(1, title);
+                                                                                                    ResultSet resultSet = statement.executeQuery();
+
+                                                                                                    if (resultSet.next()) {
+                                                                                                        System.err.println("le film existe deja svp veuillez aller modifier");
+                                                                                                    } else {
+
+
+                                                                                                        query = "INSERT INTO film (title, description, release_year, language_id, original_language_id, rental_duration, rental_rate, length, replacement_cost, rating, special_features) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                                                                                                        statement = connection.prepareStatement(query);
+                                                                                                        statement.setString(1, title);
+                                                                                                        statement.setString(2, description);
+                                                                                                        statement.setString(3, Integer.toString(release_year));
+                                                                                                        statement.setString(4, Integer.toString(language_id));
+                                                                                                        statement.setString(5, Integer.toString(original_language_id));
+                                                                                                        statement.setString(6, Float.toString(rental_duration));
+                                                                                                        statement.setString(7, Float.toString(rental_rate));
+                                                                                                        statement.setString(8, Integer.toString(length));
+                                                                                                        statement.setString(9, Float.toString(replacement_cost));
+                                                                                                        statement.setString(10, rating);
+                                                                                                        statement.setString(11, special_features);
+
+                                                                                                        int result = statement.executeUpdate();
+
+                                                                                                        if (result == 1) {
+                                                                                                            System.out.println("Les valeurs ont été insérée avec succès dans la table film");
+                                                                                                        } else {
+                                                                                                            System.err.println("Erreur: lors de l'insertion de les valeurs dans la table film");
+                                                                                                        }
+
+                                                                                                        newFilmSpecialFeats = true;
+                                                                                                        newFilmRating = true;
+                                                                                                        newFilmReplacementCost = true;
+                                                                                                        newFilmLength = true;
+                                                                                                        newFilmRentalRate = true;
+                                                                                                        newFilmRentalDuration = true;
+                                                                                                        newFilmOriginalLanguage = true;
+                                                                                                        newFilmLanguageId = true;
+                                                                                                        newFilmReleaseYear = true;
+                                                                                                        newFilmDescription = true;
+                                                                                                        newFilmValide = true;
+                                                                                                    }
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                } else {
+                                                                                    System.err.println("Erreur: pas un nombre ");
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        } else {
+                                            System.err.println("Erreur: pas un nombre");
+                                        }
+                                    }
+                                } else {
+                                    System.out.println("c'est impossible...");
+                                }
+
+                            } else {
+                                System.err.println("Erreur: pas un nombre");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+
+
+
+
+
+    /*film_actor*/
     public static void afficheFilmActor(Connection connection) throws SQLException{
         Statement stmt= connection.createStatement();
 
@@ -265,9 +527,5 @@ public class Salika {
             System.out.println("========================================================================================================");
         }
     }
-
-
-
-
 
 }
