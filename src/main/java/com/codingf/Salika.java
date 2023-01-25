@@ -87,7 +87,7 @@ public class Salika {
                     }else if(choix == 2){
                         afficheCountry(connection);
                     }else if(choix == 3){
-                        
+
                     }else if(choix == 4){
 
                     }else if(choix == 5){
@@ -128,6 +128,8 @@ public class Salika {
             }
         }
     }
+
+    /*Paiements*/
     public static void affichePayment(Connection connection) throws SQLException {
         Statement stmt= connection.createStatement();
 
@@ -142,6 +144,8 @@ public class Salika {
             System.out.println("========================================================================================================");
         }
     }
+
+    /*Locations (argent)*/
     public static void afficheRental(Connection connection) throws SQLException {
         Statement stmt= connection.createStatement();
 
@@ -156,6 +160,8 @@ public class Salika {
             System.out.println("========================================================================================================");
         }
     }
+
+    /*Ventes par catégories de film*/
     public static void afficheSalesCategory(Connection connection) throws SQLException {
         Statement stmt= connection.createStatement();
 
@@ -168,6 +174,8 @@ public class Salika {
             System.out.println("========================================================================================================");
         }
     }
+
+    /*Ventes par magasin*/
     public static void afficheSalesStore(Connection connection) throws SQLException {
         Statement stmt= connection.createStatement();
 
@@ -181,6 +189,8 @@ public class Salika {
             System.out.println("========================================================================================================");
         }
     }
+
+    /*Équipe*/
     public static void afficheStaff(Connection connection) throws SQLException {
         Statement stmt= connection.createStatement();
 
@@ -198,6 +208,8 @@ public class Salika {
             System.out.println("========================================================================================================");
         }
     }
+
+    /*Personnes dans l'équipe*/
     public static void afficheStaffList(Connection connection) throws SQLException {
         Statement stmt= connection.createStatement();
 
@@ -215,6 +227,8 @@ public class Salika {
             System.out.println("========================================================================================================");
         }
     }
+
+    /*Magasin*/
     public static void afficheStore(Connection connection) throws SQLException {
         Statement stmt= connection.createStatement();
 
