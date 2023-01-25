@@ -58,6 +58,9 @@ public class Salika {
                         if (choix == 6) {
                             choiceCountry(connection);
                             valide = true;
+
+                        }else if(choix == 9) {
+                            choiceFilm(connection);
                         }else if(choix == 24){
                             System.exit(-1);
                         }
@@ -87,7 +90,7 @@ public class Salika {
                     }else if(choix == 2){
                         afficheCountry(connection);
                     }else if(choix == 3){
-                        addFilm(connection);
+
                     }else if(choix == 4){
 
                     }else if(choix == 5){
@@ -129,6 +132,44 @@ public class Salika {
 
 
     /*film*/
+    public static void choiceFilm(Connection connection) throws SQLException{
+        System.out.println("\n1. Créer un nouveau film\n2. Afficher les films\n3. Mettre à jour un film\n4. Supprimer un film\n5. Retour");
+        System.out.println("Entrez votre choix :");
+        Scanner choice = new Scanner(System.in);
+
+        boolean valide = false;
+        while(!valide) {
+            if (choice.hasNextInt()){
+                int choix = choice.nextInt();
+                if(choix <= 5 || choix >= 1){
+                    if(choix == 1){
+                        addFilm(connection);
+                        System.out.println("\n1. Créer un nouveau film\n2. Afficher les films\n3. Mettre à jour un film\n4. Supprimer un film\n5. Retour");
+
+                    }else if(choix == 2){
+                        afficheFilm(connection);
+                        System.out.println("\n1. Créer un nouveau film\n2. Afficher les films\n3. Mettre à jour un film\n4. Supprimer un film\n5. Retour");
+
+                    }else if(choix == 3){
+                        updateFilm(connection);
+                        System.out.println("\n1. Créer un nouveau film\n2. Afficher les films\n3. Mettre à jour un film\n4. Supprimer un film\n5. Retour");
+
+                    }else if(choix == 4){
+                        removeFilm(connection);
+                        System.out.println("\n1. Créer un nouveau film\n2. Afficher les films\n3. Mettre à jour un film\n4. Supprimer un film\n5. Retour");
+
+                    }else if(choix == 5){
+                        valide = true;
+                    }
+                }else {
+                    System.err.println("Erreur: Le nombre choisi ne correspond à aucun choix proposé !!!");
+                }
+
+            }else {
+                System.err.println("Erreur: Ceci n'est pas un nombre !!!");
+            }
+        }
+    }
     public static void afficheFilm(Connection connection) throws SQLException{
         Statement stmt= connection.createStatement();
 
@@ -177,7 +218,7 @@ public class Salika {
 
             /*check si il y a un titre et enregistre*/
             if (newTitle.hasNext()) {
-                title = newTitle.next().toUpperCase();
+                title = newTitle.nextLine().toUpperCase();
 
 
 
@@ -192,7 +233,7 @@ public class Salika {
 
                     /*check si il y a une description et enregistre*/
                     if (newDescription.hasNext()) {
-                        description = newDescription.next();
+                        description = newDescription.nextLine();
 
 
 
@@ -310,7 +351,7 @@ public class Salika {
 
                                                                                         /*check si il y a un rating et enregistre*/
                                                                                         if (newRating.hasNext()) {
-                                                                                            rating = newRating.next();
+                                                                                            rating = newRating.nextLine();
 
 
 
@@ -325,7 +366,7 @@ public class Salika {
 
                                                                                                 /*check si il y a les speciales features et enregistre*/
                                                                                                 if (newSpecialFeats.hasNext()) {
-                                                                                                    special_features = newSpecialFeats.next();
+                                                                                                    special_features = newSpecialFeats.nextLine();
 
 
 
@@ -406,8 +447,230 @@ public class Salika {
             }
         }
     }
+    public static void updateFilm(Connection connection) throws SQLException {
+
+        boolean newUpdateFilm = false;
+        while (!newUpdateFilm) {
+            System.out.println("1. modifier le film\n2.quitter");
+            System.out.println("Entrez votre choix :");
+
+            Scanner picks = new Scanner(System.in);
+
+            if (picks.hasNextInt()) {
+                int pick = picks.nextInt();
+
+                if (pick == 1){
+
+                    System.out.println("id du film: ");
+                    Scanner newIdFilm = new Scanner(System.in);
+
+                    if (newIdFilm.hasNextInt()) {
+                        int film_id = newIdFilm.nextInt();
+
+                        System.out.println("\n1. Modifier title\n2. Modifier description\n3. Modifier release year\n4. Modifier language id\n5. Modifier original language id\n6. Modifier rental duration\n7. Modifier rental rate\n8. Modifier length\n9. Modifier remplacement cost\n10. Modifier rating\n11. Modifier special features");
+                        System.out.println("Entrez votre choix :");
+                        Scanner choices = new Scanner(System.in);
+
+                        if (choices.hasNextInt()) {
+
+                            int choice = choices.nextInt();
+                            PreparedStatement statement = null;
+                            String sql;
 
 
+                            if (choice == 1) {
+                                System.out.println("titre: ");
+                                Scanner newTitle = new Scanner(System.in);
+                                if (newTitle.hasNext()) {
+                                    String title = newTitle.nextLine();
+                                    sql = "UPDATE film SET title = ? WHERE film_id = ?";
+                                    statement = connection.prepareStatement(sql);
+                                    statement.setString(2, Integer.toString(film_id));
+                                    statement.setString(1, title);
+                                }
+
+                            } else if (choice == 2) {
+                                System.out.println("description: ");
+                                Scanner newDescription = new Scanner(System.in);
+                                if (newDescription.hasNext()) {
+                                    String description = newDescription.nextLine();
+                                    sql = "UPDATE film SET description = ? WHERE film_id = ?";
+                                    statement = connection.prepareStatement(sql);
+                                    statement.setString(2, Integer.toString(film_id));
+                                    statement.setString(1, description);
+                                }
+
+                            } else if (choice == 3) {
+                                System.out.println("release year: ");
+                                Scanner newReleaseYear = new Scanner(System.in);
+                                if (newReleaseYear.hasNextInt()) {
+                                    int release_year = newReleaseYear.nextInt();
+                                    if (release_year > 1800 && release_year < 9999) {
+                                        sql = "UPDATE film SET release_year = ? WHERE film_id = ?";
+                                        statement = connection.prepareStatement(sql);
+                                        statement.setString(2, Integer.toString(film_id));
+                                        statement.setString(1, Integer.toString(release_year));
+                                    } else {
+                                        System.err.println("pas possible...");
+                                    }
+                                } else {
+                                    System.err.println("pas un nombre");
+                                }
+
+                            } else if (choice == 4) {
+                                System.out.println("language id: ");
+                                Scanner newLanguageId = new Scanner(System.in);
+                                if (newLanguageId.hasNextInt()) {
+                                    int language_id = newLanguageId.nextInt();
+                                    sql = "UPDATE film SET language_id = ? WHERE film_id = ?";
+                                    statement = connection.prepareStatement(sql);
+                                    statement.setString(2, Integer.toString(film_id));
+                                    statement.setString(1, Integer.toString(language_id));
+                                } else {
+                                    System.err.println("pas un nombre");
+                                }
+
+                            } else if (choice == 5) {
+                                System.out.println("original language id: ");
+                                Scanner newOriginalLanguageId = new Scanner(System.in);
+                                if (newOriginalLanguageId.hasNextInt()) {
+                                    int original_language_id = newOriginalLanguageId.nextInt();
+                                    sql = "UPDATE film SET original_language_id = ? WHERE film_id = ?";
+                                    statement = connection.prepareStatement(sql);
+                                    statement.setString(2, Integer.toString(film_id));
+                                    statement.setString(1, Integer.toString(original_language_id));
+                                } else {
+                                    System.err.println("pas un nombre");
+                                }
+
+                            } else if (choice == 6) {
+                                System.out.println("rental duration: ");
+                                Scanner newRentalDuration = new Scanner(System.in);
+                                if (newRentalDuration.hasNextInt()) {
+                                    int rental_duration = newRentalDuration.nextInt();
+                                    sql = "UPDATE film SET rental_duration = ? WHERE film_id = ?";
+                                    statement = connection.prepareStatement(sql);
+                                    statement.setString(2, Integer.toString(film_id));
+                                    statement.setString(1, Integer.toString(rental_duration));
+                                } else {
+                                    System.err.println("pas un nombre");
+                                }
+
+                            } else if (choice == 7) {
+                                System.out.println("rental rate: ");
+                                Scanner newRentalRate = new Scanner(System.in);
+                                if (newRentalRate.hasNextInt()) {
+                                    int rental_rate = newRentalRate.nextInt();
+                                    sql = "UPDATE film SET rental_rate = ? WHERE film_id = ?";
+                                    statement = connection.prepareStatement(sql);
+                                    statement.setString(2, Integer.toString(film_id));
+                                    statement.setString(1, Float.toString(rental_rate));
+                                } else {
+                                    System.err.println("pas un nombre");
+                                }
+
+                            } else if (choice == 8) {
+                                System.out.println("length: ");
+                                Scanner newLength = new Scanner(System.in);
+                                if (newLength.hasNextInt()) {
+                                    int length = newLength.nextInt();
+                                    sql = "UPDATE film SET length = ? WHERE film_id = ?";
+                                    statement = connection.prepareStatement(sql);
+                                    statement.setString(2, Integer.toString(film_id));
+                                    statement.setString(1, Integer.toString(length));
+                                } else {
+                                    System.err.println("pas un nombre");
+                                }
+
+                            } else if (choice == 9) {
+                                System.out.println("replacement cost: ");
+                                Scanner newReplacementCost = new Scanner(System.in);
+                                if (newReplacementCost.hasNextInt()) {
+                                    int replacement_cost = newReplacementCost.nextInt();
+                                    sql = "UPDATE film SET replacement_cost = ? WHERE film_id = ?";
+                                    statement = connection.prepareStatement(sql);
+                                    statement.setString(2, Integer.toString(film_id));
+                                    statement.setString(1, Float.toString(replacement_cost));
+                                } else {
+                                    System.err.println("pas un nombre");
+                                }
+
+                            } else if (choice == 10) {
+                                System.out.println("rating: ");
+                                Scanner newRating = new Scanner(System.in);
+                                if (newRating.hasNext()) {
+                                    String rating = newRating.nextLine();
+                                    sql = "UPDATE film SET rating = ? WHERE film_id = ?";
+                                    statement = connection.prepareStatement(sql);
+                                    statement.setString(2, Integer.toString(film_id));
+                                    statement.setString(1, rating);
+                                }
+
+                            } else if (choice == 11) {
+                                System.out.println("special features: ");
+                                Scanner newSpecialFeats = new Scanner(System.in);
+                                if (newSpecialFeats.hasNext()) {
+                                    String special_features = newSpecialFeats.nextLine();
+                                    sql = "UPDATE film SET special_features = ? WHERE film_id = ?";
+                                    statement = connection.prepareStatement(sql);
+                                    statement.setString(2, Integer.toString(film_id));
+                                    statement.setString(1, special_features);
+                                }
+                            }
+
+
+                            statement.executeUpdate();
+
+                        } else {
+                            System.err.println("pas un nombre");
+                        }
+                    }
+
+                } else if (pick == 2) {
+                    System.out.println("Quitter");
+                    newUpdateFilm = true;
+
+                } else {
+                    System.err.println("pas une option");
+                }
+            }
+        }
+    }
+    public static void removeFilm(Connection connection) throws SQLException {
+        afficheFilm(connection);
+
+        boolean newRemoveFilm = false;
+        while(!newRemoveFilm) {
+            ResultSet result;
+            PreparedStatement statement;
+
+            System.out.println("quel film voulez vous upprimer ?");
+            Scanner removeTitle = new Scanner(System.in);
+            String title = removeTitle.nextLine();
+
+            String sql = "SELECT * FROM film WHERE title = ?";
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, title);
+            result = statement.executeQuery();
+
+
+            if (!result.next()) {
+                System.err.println("le film existe pas :P");
+                newRemoveFilm = true;
+            } else {
+
+                sql = "DELETE FROM film WHERE title = ?";
+                statement = connection.prepareStatement(sql);
+
+                statement.setString(1, title);
+
+                statement.executeUpdate();
+
+                System.out.println("film a ete supprimer");
+                newRemoveFilm = true;
+            }
+        }
+    }
 
 
 
