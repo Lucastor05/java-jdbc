@@ -264,6 +264,51 @@ public class Salika {
         }
     }
 
+    public static void updatePayment(Connection connection) throws SQLException{
+        affichePayment(connection);
+        Scanner scanner = new Scanner(System.in);
+
+        try {
+            System.out.print("Entrez l'ID du paiement à mettre à jour : ");
+            int categoryId = scanner.nextInt();
+            scanner.nextLine();
+
+            // Vérifie si l'ID de la catégorie existe dans la table
+            String sql = "SELECT COUNT(*) FROM payment WHERE payment_id = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, categoryId);
+            ResultSet result = statement.executeQuery();
+            if (!result.next() || result.getInt(1) != 1) {
+                System.out.println("L'id du paiement est non valide, veuillez réessayer.");
+                return;
+            }
+
+            System.out.print("Entrez le nouvel id du client : ");
+            int customerId = scanner.nextInt();
+            System.out.print("Entrez le nouvel id de la personne du staff s'occupant du client : ");
+            int staffId = scanner.nextInt();
+            System.out.print("Entrez le nouvel id de la location : ");
+            int rentalId = scanner.nextInt();
+            System.out.println("Entrez la nouvelle quantité d'argent déversé : ");
+            float amount = scanner.nextFloat();
+
+
+
+            // Mise à jour de la catégorie dans la table
+            String querry = "UPDATE payment SET customer_id = ? AND staff_id = ? AND rental_id = ? AND amount = ? WHERE payment_id = ?";
+            statement = connection.prepareStatement(querry);
+            statement.setInt(1, customerId);
+            statement.setInt(2, staffId);
+            statement.setInt(3, rentalId);
+            statement.setFloat(4, amount);
+
+            statement.executeUpdate();
+            System.out.println("Le tableau Payment à été mis à jour avec succès");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     /*Locations (argent)*/
     public static void afficheRental(Connection connection) throws SQLException {
         Statement stmt= connection.createStatement();
@@ -402,18 +447,20 @@ public class Salika {
 
             System.out.print("Entrez le nouvel id de l'inventaire : ");
             int inventoryId = scanner.nextInt();
-            System.out.print("Entrez le nouvel id de l'adresse : ");
-            int addressId = scanner.nextInt();
+            System.out.print("Entrez le nouvel id du client : ");
+            int customerId = scanner.nextInt();
+            System.out.print("Entrez le nouvel id de la personne du staff s'occupant du client : ");
+            int staffId = scanner.nextInt();
 
 
             // Mise à jour de la catégorie dans la table
-            String querry = "UPDATE store SET manager_staff_id = ? AND address_id = ? WHERE store_id = ?";
+            String querry = "UPDATE rental SET inventory_id = ? AND customer_id = ? AND staff_id = ? WHERE rental_id = ?";
             statement = connection.prepareStatement(querry);
             statement.setInt(1, inventoryId);
-            statement.setInt(2, addressId);
-            statement.setInt(3, categoryId);
+            statement.setInt(2, customerId);
+            statement.setInt(3, staffId);
             statement.executeUpdate();
-            System.out.println("Le tableau Store à été mis à jour avec succès");
+            System.out.println("Le tableau Rental à été mis à jour avec succès");
         } catch (SQLException e) {
             e.printStackTrace();
         }
