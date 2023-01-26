@@ -113,7 +113,7 @@ public class Salika {
                             Affiche.afficheActor(connection);
                             valide = true;
                         } else if (choix == 3) {
-
+                            Update.updateActor(connection);
                             valide = true;
                         } else if (choix == 4) {
                             Delete.deleteActor(connection);
@@ -153,7 +153,7 @@ public class Salika {
                             Affiche.afficheAddress(connection);
                             valide = true;
                         }else if(choix == 3){
-
+                            Update.updateAddress(connection);
                             valide = true;
                         }else if(choix == 4){
                             Delete.deleteAddress(connection);
@@ -193,7 +193,7 @@ public class Salika {
                             Affiche.afficheCategory(connection);
                             valide = true;
                         }else if(choix == 3){
-
+                            Update.updateCategory(connection);
                             valide = true;
                         }else if(choix == 4){
                             Delete.deleteCategory(connection);
@@ -233,7 +233,7 @@ public class Salika {
                             Affiche.afficheCity(connection);
                             valide = true;
                         }else if(choix == 3){
-
+                            Update.updateCity(connection);
                             valide = true;
                         }else if(choix == 4){
                             Delete.deleteCity(connection);
@@ -313,7 +313,7 @@ public class Salika {
                             Affiche.afficheCustomer(connection);
                             valide = true;
                         }else if(choix == 3){
-
+                            Update.updateCustomer(connection);
                             valide = true;
                         }else if(choix == 4){
                             Delete.deleteCustomer(connection);

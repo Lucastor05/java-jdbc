@@ -1,6 +1,9 @@
 package com.codingf;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Add {
@@ -230,64 +233,40 @@ public class Add {
         }
     }
     public static void addCustomer(Connection connection) throws SQLException {
-        // Connect to the database
-        Statement stmt = connection.createStatement();
+        boolean newCountryValide = false;
+        while(!newCountryValide) {
+            System.out.print("Entrez le nom du pays que vous souhaitez ajouter : ");
+            Scanner newCountry = new Scanner(System.in);
 
-        // Get the customer information from the user
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Enter the store ID: ");
-        int store_id = sc.nextInt();
-        sc.nextLine();
-        System.out.print("Enter the first name: ");
-        String first_name = sc.nextLine();
-        System.out.print("Enter the last name: ");
-        String last_name = sc.nextLine();
-        System.out.print("Enter the email address: ");
-        String email = sc.nextLine();
-        System.out.print("Enter the address ID: ");
-        int address_id = sc.nextInt();
-        System.out.print("Enter the active status (1 or 0): ");
-        int active = sc.nextInt();
+            if (!newCountry.hasNextInt()) {
+                String name = newCountry.next();
+                String query = "SELECT * FROM country WHERE country = ?";
+                PreparedStatement statement = connection.prepareStatement(query);
+                statement.setString(1, name);
+                ResultSet resultSet = statement.executeQuery();
 
-        // Validate the input values
-        if (store_id < 0 || store_id > 255) {
-            System.out.println("Error: Store ID must be between 0 and 255");
-            return;
-        }
-        if (first_name.length() > 45) {
-            System.out.println("Error: First name must be 45 characters or less");
-            return;
-        }
-        if (last_name.length() > 45) {
-            System.out.println("Error: Last name must be 45 characters or less");
-            return;
-        }
-        if (email.length() > 50) {
-            System.out.println("Error: Email must be 50 characters or less");
-            return;
-        }
-        if (address_id < 0 || address_id > 65535) {
-            System.out.println("Error: Address ID must be between 0 and 65535");
-            return;
-        }
-        if (active != 0 && active != 1) {
-            System.out.println("Error: Active status must be 0 or 1");
-            return;
-        }
+                if (resultSet.next()) {
+                    System.err.println("Erreur: Le pays existe déjà !!!");
+                } else {
 
-        // Insert the customer into the table
-        String sql = "INSERT INTO customer (store_id, first_name, last_name, email, address_id, active, create_date) VALUES (?, ?, ?, ?, ?, ?, NOW())";
-        PreparedStatement pstmt = connection.prepareStatement(sql);
-        pstmt.setInt(1, store_id);
-        pstmt.setString(2, first_name);
-        pstmt.setString(3, last_name);
-        pstmt.setString(4, email);
-        pstmt.setInt(5, address_id);
-        pstmt.setInt(6, active);
-        pstmt.executeUpdate();
+                    query = "INSERT INTO country (country) VALUES (?);";
+                    statement = connection.prepareStatement(query);
+                    statement.setString(1, name);
 
+                    int result = statement.executeUpdate();
 
+                    if (result == 1) {
+                        System.out.println("\nLa valeur a été insérée avec succès dans la table country");
+                    } else {
+                        System.err.println("\nErreur: lors de l'insertion de la valeur dans la table country");
+                    }
+
+                    newCountryValide = true;
+                }
+            }else{
+                System.err.println("\nErreur: Le nom ne peut etre un numéro");
+            }
+        }
     }
-
 
 }
