@@ -227,6 +227,43 @@ public class Salika {
 
     }
 
+    public static void deletePayment(Connection connection) throws SQLException {
+        boolean newPaymentValide = false;
+        while(!newPaymentValide) {
+            affichePayment(connection);
+            System.out.print("Entrez l'id du paiement que vous souhaitez supprimer : ");
+            Scanner newPayment = new Scanner(System.in);
+
+            if (newPayment.hasNextInt()) {
+                String name = newPayment.next();
+                String query = "SELECT * FROM payment WHERE payment_id = ?";
+                PreparedStatement statement = connection.prepareStatement(query);
+                statement.setString(1, name);
+                ResultSet resultSet = statement.executeQuery();
+
+                if (!resultSet.next()) {
+                    System.err.println("\nErreur: l'id de ce paiement n'existe pas.");
+                } else {
+                    query = "DELETE FROM payment WHERE payment_id = ?";
+                    statement = connection.prepareStatement(query);
+                    statement.setString(1, name);
+
+                    int result = statement.executeUpdate();
+
+                    if (result == 1) {
+                        System.out.println("\nLes informations de l'id entré ont été supprimées avec succès dans la table payment.");
+                    } else {
+                        System.out.println("\nErreur lors de la suppression des informations dans la table payment.");
+                    }
+
+                    newPaymentValide = true;
+                }
+            }else{
+                System.err.println("\nErreur: ceci n'est pas un nombre.");
+            }
+        }
+    }
+
     /*Locations (argent)*/
     public static void afficheRental(Connection connection) throws SQLException {
         Statement stmt= connection.createStatement();
@@ -305,6 +342,43 @@ public class Salika {
         // exécuter la requête
         statement2.executeUpdate();
 
+    }
+
+    public static void deleteRental(Connection connection) throws SQLException {
+        boolean newRentalValide = false;
+        while(!newRentalValide) {
+            afficheRental(connection);
+            System.out.print("Entrez l'id de la location que vous souhaitez supprimer : ");
+            Scanner newRental = new Scanner(System.in);
+
+            if (newRental.hasNextInt()) {
+                String name = newRental.next();
+                String query = "SELECT * FROM rental WHERE rental_id = ?";
+                PreparedStatement statement = connection.prepareStatement(query);
+                statement.setString(1, name);
+                ResultSet resultSet = statement.executeQuery();
+
+                if (!resultSet.next()) {
+                    System.err.println("\nErreur: l'id de cette location n'existe pas.");
+                } else {
+                    query = "DELETE FROM rental WHERE rental_id = ?";
+                    statement = connection.prepareStatement(query);
+                    statement.setString(1, name);
+
+                    int result = statement.executeUpdate();
+
+                    if (result == 1) {
+                        System.out.println("\nLes informations de l'id entré ont été supprimées avec succès dans la table rental.");
+                    } else {
+                        System.out.println("\nErreur lors de la suppression des informations dans la table rental.");
+                    }
+
+                    newRentalValide = true;
+                }
+            }else{
+                System.err.println("\nErreur: ceci n'est pas un nombre.");
+            }
+        }
     }
 
     /*Ventes par catégories de film*/
@@ -500,6 +574,43 @@ public class Salika {
         }
     }
 
+    public static void deleteStaff(Connection connection) throws SQLException {
+        boolean newStaffValide = false;
+        while(!newStaffValide) {
+            afficheStaff(connection);
+            System.out.print("Entrez l'id de la personne dans l'équipe que vous souhaitez supprimer : ");
+            Scanner newStaff = new Scanner(System.in);
+
+            if (newStaff.hasNextInt()) {
+                String name = newStaff.next();
+                String query = "SELECT * FROM staff WHERE staff_id = ?";
+                PreparedStatement statement = connection.prepareStatement(query);
+                statement.setString(1, name);
+                ResultSet resultSet = statement.executeQuery();
+
+                if (!resultSet.next()) {
+                    System.err.println("\nErreur: l'id de cette personne de l'équipe n'existe pas.");
+                } else {
+                    query = "DELETE FROM staff WHERE staff_id = ?";
+                    statement = connection.prepareStatement(query);
+                    statement.setString(1, name);
+
+                    int result = statement.executeUpdate();
+
+                    if (result == 1) {
+                        System.out.println("\nLes informations de l'id entré ont été supprimées avec succès dans la table staff.");
+                    } else {
+                        System.out.println("\nErreur lors de la suppression des informations dans la table staff.");
+                    }
+
+                    newStaffValide = true;
+                }
+            }else{
+                System.err.println("\nErreur: ceci n'est pas un nombre.");
+            }
+        }
+    }
+
     /*Personnes dans l'équipe*/
     public static void afficheStaffList(Connection connection) throws SQLException {
         Statement stmt= connection.createStatement();
@@ -582,6 +693,43 @@ public class Salika {
             statement2.executeUpdate();
         }
 
+    }
+
+    public static void deleteStore(Connection connection) throws SQLException {
+        boolean newStoreValide = false;
+        while(!newStoreValide) {
+            afficheStore(connection);
+            System.out.print("Entrez l'id du magasin que vous souhaitez supprimer : ");
+            Scanner newStore = new Scanner(System.in);
+
+            if (newStore.hasNextInt()) {
+                String name = newStore.next();
+                String query = "SELECT * FROM store WHERE store_id = ?";
+                PreparedStatement statement = connection.prepareStatement(query);
+                statement.setString(1, name);
+                ResultSet resultSet = statement.executeQuery();
+
+                if (!resultSet.next()) {
+                    System.err.println("\nErreur: l'id de ce magasin n'existe pas.");
+                } else {
+                    query = "DELETE FROM store WHERE store_id = ?";
+                    statement = connection.prepareStatement(query);
+                    statement.setString(1, name);
+
+                    int result = statement.executeUpdate();
+
+                    if (result == 1) {
+                        System.out.println("\nLes informations de l'id entré ont été supprimées avec succès dans la table store.");
+                    } else {
+                        System.out.println("\nErreur lors de la suppression des informations dans la table store.");
+                    }
+
+                    newStoreValide = true;
+                }
+            }else{
+                System.err.println("\nErreur: ceci n'est pas un nombre.");
+            }
+        }
     }
 
 }
