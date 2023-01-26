@@ -197,6 +197,7 @@ public class Salika {
 
         ResultSet filmTitle= stmt.executeQuery("SELECT * FROM film");
 
+        //loop qui permet d'afficher tout les informations sur la table film
         System.out.println();
         while(filmTitle.next()){
             System.out.println("film_id: "+ filmTitle.getString(1));
@@ -218,6 +219,7 @@ public class Salika {
     }
     public static void addFilm(Connection connection) throws SQLException {
 
+        //creation des  variables
         String title;
         String description;
         int release_year;
@@ -391,7 +393,7 @@ public class Salika {
                                                                                                     special_features = newSpecialFeats.nextLine();
 
 
-
+                                                                                                    //check si il existe deja dans la table
                                                                                                     String query = "SELECT * FROM film WHERE title = ?";
                                                                                                     PreparedStatement statement = connection.prepareStatement(query);
                                                                                                     statement.setString(1, title);
@@ -401,7 +403,7 @@ public class Salika {
                                                                                                         System.err.println("le film existe deja svp veuillez aller modifier");
                                                                                                     } else {
 
-
+                                                                                                        //si il n'existe pas alors inserer dans la table
                                                                                                         query = "INSERT INTO film (title, description, release_year, language_id, original_language_id, rental_duration, rental_rate, length, replacement_cost, rating, special_features) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
                                                                                                         statement = connection.prepareStatement(query);
                                                                                                         statement.setString(1, title);
@@ -424,6 +426,7 @@ public class Salika {
                                                                                                             System.err.println("Erreur: lors de l'insertion de les valeurs dans la table film");
                                                                                                         }
 
+                                                                                                        //fermeture des loops
                                                                                                         newFilmSpecialFeats = true;
                                                                                                         newFilmRating = true;
                                                                                                         newFilmReplacementCost = true;
@@ -472,6 +475,8 @@ public class Salika {
     public static void updateFilm(Connection connection) throws SQLException {
         afficheFilm(connection);
         boolean newUpdateFilm = false;
+
+        //permet de demander a l'utilisateur si il veut modifier ou quitter
         while (!newUpdateFilm) {
             System.out.println("1. modifier le film\n2.quitter");
             System.out.println("Entrez votre choix :");
@@ -481,14 +486,17 @@ public class Salika {
             if (picks.hasNextInt()) {
                 int pick = picks.nextInt();
 
+                //si l'utilisateur souhait modifier sinon quitter
                 if (pick == 1){
 
+                    //demande l'id du film souhaiter pour modifier
                     System.out.println("id du film: ");
                     Scanner newIdFilm = new Scanner(System.in);
 
                     if (newIdFilm.hasNextInt()) {
                         int film_id = newIdFilm.nextInt();
 
+                        //l'utilisateur aura plusieurs choix en dependant de ce qu'il veut modifier
                         System.out.println("\n1. Modifier title\n2. Modifier description\n3. Modifier release year\n4. Modifier language id\n5. Modifier original language id\n6. Modifier rental duration\n7. Modifier rental rate\n8. Modifier length\n9. Modifier remplacement cost\n10. Modifier rating\n11. Modifier special features");
                         System.out.println("Entrez votre choix :");
                         Scanner choices = new Scanner(System.in);
@@ -641,6 +649,7 @@ public class Salika {
                             }
 
 
+                            //execute les requetes de sql
                             statement.executeUpdate();
 
                         } else {
@@ -666,25 +675,29 @@ public class Salika {
             ResultSet result;
             PreparedStatement statement;
 
-            System.out.println("quel film voulez vous supprimer ?");
-            Scanner removeTitle = new Scanner(System.in);
-            String title = removeTitle.nextLine();
+            //demande a l'utilisateur quel film il veut supprimer
+            System.out.println("quel film id voulez vous supprimer ?");
+            Scanner removeFilmId = new Scanner(System.in);
+            int film_id = removeFilmId.nextInt();
 
-            String sql = "SELECT * FROM film WHERE title = ?";
+            //verifie si le film existe
+            String sql = "SELECT * FROM film WHERE film_id = ?";
             statement = connection.prepareStatement(sql);
-            statement.setString(1, title);
+            statement.setString(1, Integer.toString(film_id));
             result = statement.executeQuery();
 
 
             if (!result.next()) {
                 System.err.println("le film existe pas :P");
                 newRemoveFilm = true;
+
             } else {
 
-                sql = "DELETE FROM film WHERE title = ?";
+                //si le film existe alors on le supprime
+                sql = "DELETE FROM film WHERE film_id = ?";
                 statement = connection.prepareStatement(sql);
 
-                statement.setString(1, title);
+                statement.setString(1, Integer.toString(film_id));
 
                 statement.executeUpdate();
 
@@ -693,8 +706,6 @@ public class Salika {
             }
         }
     }
-
-
 
 
 
@@ -741,6 +752,7 @@ public class Salika {
     public static void afficheFilmActor(Connection connection) throws SQLException{
         Statement stmt= connection.createStatement();
 
+        //print la table film actor
         ResultSet filmActor= stmt.executeQuery("SELECT * FROM film_actor");
 
         System.out.println();
@@ -757,6 +769,7 @@ public class Salika {
         boolean restart = false;
         while (!restart){
 
+            //demande si l'utilisateur veut ajouter ou quitter
             System.out.println("1. ajouter un film actor\n2.quitter");
             Scanner choix1 = new Scanner(System.in);
 
@@ -769,6 +782,8 @@ public class Salika {
 
                     boolean loop = false;
                     while(!loop) {
+
+                        //demande un id pour l'actor
                         System.out.println("actor id:");
                         Scanner newActorId = new Scanner(System.in);
                         if (newActorId.hasNextInt()) {
@@ -781,6 +796,8 @@ public class Salika {
 
                     boolean loop2 = false;
                     while (!loop2){
+
+                        //demande un id pour le film
                         System.out.println("film id:");
                         Scanner newFilmId = new Scanner(System.in);
                         if (newFilmId.hasNextInt()) {
@@ -791,6 +808,7 @@ public class Salika {
                         }
                     }
 
+                    //check si il existe deja dans la table
                     String query = "SELECT * FROM film_actor WHERE actor_id = ? AND film_id = ?;";
                     PreparedStatement statement = connection.prepareStatement(query);
                     statement.setString(1, Integer.toString(actor_id));
@@ -803,7 +821,7 @@ public class Salika {
                         break;
                     }
 
-
+                    //si il existe pas alors ajouter a la table
                     query = "INSERT INTO film_actor (actor_id, film_id) VALUES (?, ?);";
                     statement = connection.prepareStatement(query);
                     statement.setString(1, Integer.toString(actor_id));
@@ -820,8 +838,6 @@ public class Salika {
                     restart = true;
 
 
-
-
                 } else if (choix1def == 2){
                     System.out.println("Quitter :D");
 
@@ -835,6 +851,7 @@ public class Salika {
         afficheFilmActor(connection);
         boolean newUpdateFilm = false;
         while (!newUpdateFilm) {
+            //demande si il veut modifier ou quitter
             System.out.println("1. modifier le film id et actor\n2.quitter");
             System.out.println("Entrez votre choix :");
 
@@ -845,6 +862,7 @@ public class Salika {
 
                 if (pick == 1){
 
+                    //demande l'id d'un actor
                     System.out.println("id de actor: ");
                     Scanner newIdActor = new Scanner(System.in);
 
@@ -853,12 +871,15 @@ public class Salika {
 
                         boolean loop = false;
                         while (!loop) {
+
+                            //deamnde l'id d'un film
                             System.out.println("id du film a changer: ");
                             Scanner newIdFilm = new Scanner(System.in);
 
                             if (newIdFilm.hasNextInt()) {
                                 int film_id = newIdFilm.nextInt();
 
+                                //check si il existe
                                 String sql = "SELECT * FROM film_actor WHERE actor_id = ? AND film_id = ?";
                                 PreparedStatement statement = connection.prepareStatement(sql);
 
@@ -875,6 +896,8 @@ public class Salika {
                                 }
 
                                 if (!isFilmActorExist) {
+
+                                    //si il existe alors on execute le sql
                                     sql = "UPDATE film_actor SET film_id = ? WHERE actor_id = ?";
                                     statement = connection.prepareStatement(sql);
                                     statement.setString(2, Integer.toString(actor_id));
@@ -910,14 +933,17 @@ public class Salika {
             ResultSet result;
             PreparedStatement statement;
 
+            //demande l'id dans actor
             System.out.println("quel actor id voulez vous supprimer ?");
             Scanner removeIdActor = new Scanner(System.in);
             int actor_id = removeIdActor.nextInt();
 
+            //demande l'id d'en film
             System.out.println("quel film id voulez vous supprimer ?");
             Scanner removeIdfilm = new Scanner(System.in);
             int film_id = removeIdfilm.nextInt();
 
+            //check si le film et actor existe
             String sql = "SELECT * FROM film_actor WHERE actor_id = ? AND film_id = ?";
             statement = connection.prepareStatement(sql);
             statement.setString(1, Integer.toString(actor_id));
@@ -931,6 +957,7 @@ public class Salika {
 
             } else {
 
+                //si le film et actor existe alors on supprime
                 sql = "DELETE FROM film_actor WHERE actor_id = ? AND film_id = ?";
                 statement = connection.prepareStatement(sql);
 
@@ -972,7 +999,7 @@ public class Salika {
                         System.out.println("\n1. Créer un nouveau film category\n2. Afficher les films categories\n3. Mettre à jour un film category\n4. Supprimer un film category\n5. Retour");
 
                     }else if(choix == 4){
-
+                        removeFilmCate(connection);
                         System.out.println("\n1. Créer un nouveau film category\n2. Afficher les films categories\n3. Mettre à jour un film category\n4. Supprimer un film category\n5. Retour");
 
                     }else if(choix == 5){
@@ -994,6 +1021,7 @@ public class Salika {
         boolean restart = false;
         while (!restart){
 
+            //demande si il veut ajouter ou quitter
             System.out.println("1. ajouter une category\n2.quitter");
             Scanner choix1 = new Scanner(System.in);
 
@@ -1006,6 +1034,8 @@ public class Salika {
 
                     boolean loop = false;
                     while(!loop) {
+
+                        //demande l'id de category
                         System.out.println("category id:");
                         Scanner newCategory = new Scanner(System.in);
                         if (newCategory.hasNextInt()) {
@@ -1018,6 +1048,7 @@ public class Salika {
 
                     boolean loop2 = false;
                     while (!loop2){
+                        //demande l'id du film
                         System.out.println("film id:");
                         Scanner newFilmId = new Scanner(System.in);
                         if (newFilmId.hasNextInt()) {
@@ -1026,6 +1057,7 @@ public class Salika {
                         }
                     }
 
+                    //si le film existe
                     String query = "SELECT * FROM film_category WHERE category_id = ? AND film_id = ?;";
                     PreparedStatement statement = connection.prepareStatement(query);
                     statement.setString(1, Integer.toString(category_id));
@@ -1038,7 +1070,7 @@ public class Salika {
 
                     } else {
 
-
+                        //si le film existe pas alos on ajoute a la table
                         query = "INSERT INTO film_category (category_id, film_id) VALUES (?, ?);";
                         statement = connection.prepareStatement(query);
                         statement.setString(1, Integer.toString(category_id));
@@ -1068,6 +1100,7 @@ public class Salika {
     public static void afficheFilmCate(Connection connection) throws SQLException{
         Statement stmt= connection.createStatement();
 
+        //print la table film category
         ResultSet filmCate= stmt.executeQuery("SELECT * FROM film_category");
 
         System.out.println();
@@ -1084,6 +1117,7 @@ public class Salika {
         boolean restart = false;
         while (!restart){
 
+            //demande si il veut modifier ou quitter
             System.out.println("1.modifier une category\n2.quitter");
             Scanner choix1 = new Scanner(System.in);
 
@@ -1096,6 +1130,7 @@ public class Salika {
 
                     boolean loop2 = false;
                     while (!loop2){
+                        //demande l'id du film
                         System.out.println("film id:");
                         Scanner newFilmId = new Scanner(System.in);
                         if (newFilmId.hasNextInt()) {
@@ -1106,6 +1141,7 @@ public class Salika {
 
                     boolean loop = false;
                     while(!loop) {
+                        //demande l'id du category
                         System.out.println("category id a changer:");
                         Scanner newCategory = new Scanner(System.in);
                         if (newCategory.hasNextInt()) {
@@ -1116,6 +1152,7 @@ public class Salika {
                         }
                     }
 
+                    //check si il existe
                     String query = "SELECT * FROM film_category WHERE category_id = ? AND film_id = ?";
                     PreparedStatement statement = connection.prepareStatement(query);
                     statement.setString(1, Integer.toString(category_id));
@@ -1128,7 +1165,7 @@ public class Salika {
 
                     } else {
 
-
+                        //si il existe alors on modifie
                         query = "UPDATE film_category SET category_id = ? WHERE film_id = ?";
                         statement = connection.prepareStatement(query);
                         statement.setString(1, Integer.toString(category_id));
@@ -1156,42 +1193,46 @@ public class Salika {
         }
     }
     public static void removeFilmCate(Connection connection) throws SQLException{
-        afficheFilmActor(connection);
+        afficheFilmCate(connection);
 
         boolean newRemoveFilm = false;
         while(!newRemoveFilm) {
             ResultSet result;
             PreparedStatement statement;
 
-            System.out.println("quel actor id voulez vous supprimer ?");
-            Scanner removeIdActor = new Scanner(System.in);
-            int actor_id = removeIdActor.nextInt();
-
+            //demande l'id du film
             System.out.println("quel film id voulez vous supprimer ?");
-            Scanner removeIdfilm = new Scanner(System.in);
-            int film_id = removeIdfilm.nextInt();
+            Scanner removeFilmId = new Scanner(System.in);
+            int film_id = removeFilmId.nextInt();
 
-            String sql = "SELECT * FROM film_actor WHERE actor_id = ? AND film_id = ?";
+            //demande l'id du category
+            System.out.println("quel category id voulez vous supprimer ?");
+            Scanner removeCateId = new Scanner(System.in);
+            int cate_id = removeCateId.nextInt();
+
+            //check si il existe
+            String sql = "SELECT * FROM film_category WHERE category_id = ? AND film_id = ?";
             statement = connection.prepareStatement(sql);
-            statement.setString(1, Integer.toString(actor_id));
+            statement.setString(1, Integer.toString(cate_id));
             statement.setString(2, Integer.toString(film_id));
             result = statement.executeQuery();
 
 
             if (!result.next()) {
-                System.err.println("le film actor existe pas :P");
+                System.err.println("le film category existe pas :P");
                 newRemoveFilm = true;
 
             } else {
 
-                sql = "DELETE FROM film_actor WHERE actor_id = ? AND film_id = ?";
+                //si il existe alors on supprime
+                sql = "DELETE FROM film_category WHERE category_id = ? AND film_id = ?";
                 statement = connection.prepareStatement(sql);
 
-                statement.setString(1, Integer.toString(actor_id));
+                statement.setString(1, Integer.toString(cate_id));
                 statement.setString(2, Integer.toString(film_id));
                 statement.executeUpdate();
 
-                System.out.println("film actor a ete supprimer");
+                System.out.println("film category a ete supprimer");
                 newRemoveFilm = true;
             }
         }
@@ -1230,6 +1271,7 @@ public class Salika {
     public static void afficheFilmList(Connection connection) throws SQLException{
         Statement stmt= connection.createStatement();
 
+        //print la table film list
         ResultSet filmList= stmt.executeQuery("SELECT * FROM film_list");
 
         System.out.println();
@@ -1272,7 +1314,7 @@ public class Salika {
                     System.out.println("\n1. Créer un nouveau film text\n2. Afficher les films text\n3. Mettre à jour un film text\n4. Supprimer un film text\n5. Retour");
 
                 }else if(choix == 4){
-
+                    removeFilmText(connection);
                     System.out.println("\n1. Créer un nouveau film text\n2. Afficher les films text\n3. Mettre à jour un film text\n4. Supprimer un film text\n5. Retour");
 
                 }else if(choix == 5){
@@ -1294,6 +1336,7 @@ public class Salika {
         boolean restart = false;
         while (!restart){
 
+            //demande si il veut ajouter ou quitter
             System.out.println("1.ajouter un film text\n2.quitter");
             Scanner choix1 = new Scanner(System.in);
 
@@ -1382,6 +1425,7 @@ public class Salika {
     public static void afficheFilmText(Connection connection) throws SQLException{
         Statement stmt= connection.createStatement();
 
+        //print la table film text
         ResultSet filmText= stmt.executeQuery("SELECT * FROM film_text");
 
         System.out.println();
@@ -1399,6 +1443,7 @@ public class Salika {
         boolean restart = false;
         while (!restart){
 
+            //demande si il veut modifier ou quitter
             System.out.println("1.modifier un film text\n2.quitter");
             Scanner choix1 = new Scanner(System.in);
 
@@ -1442,7 +1487,7 @@ public class Salika {
                         }
                     }
 
-
+                    //check si il existe
                     String query = "SELECT * FROM film_text WHERE film_id = ? AND title = ? AND description = ?;";
                     PreparedStatement statement = connection.prepareStatement(query);
                     statement.setString(1, Integer.toString(film_id));
@@ -1456,7 +1501,7 @@ public class Salika {
 
                     }else {
 
-
+                        //si il exite alors on modifie
                         query = "UPDATE film_text SET title = ?, description = ? WHERE film_id = ?";
                         statement = connection.prepareStatement(query);
                         statement.setString(3, Integer.toString(film_id));
@@ -1481,6 +1526,44 @@ public class Salika {
                 } else {
                     System.err.println("pas une option");
                 }
+            }
+        }
+    }
+    public static void removeFilmText(Connection connection) throws SQLException{
+        afficheFilmText(connection);
+
+        boolean newRemoveFilm = false;
+        while(!newRemoveFilm) {
+            ResultSet result;
+            PreparedStatement statement;
+
+            //demande l'id du film
+            System.out.println("quel film id voulez vous supprimer ?");
+            Scanner removeFilmId = new Scanner(System.in);
+            int film_id = removeFilmId.nextInt();
+
+            //check si il existe
+            String sql = "SELECT * FROM film_text WHERE film_id = ?";
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, Integer.toString(film_id));
+            result = statement.executeQuery();
+
+
+            if (!result.next()) {
+                System.err.println("le film text existe pas :P");
+                newRemoveFilm = true;
+
+            } else {
+
+                //si il existe alors on supprime
+                sql = "DELETE FROM film_text WHERE film_id = ?";
+                statement = connection.prepareStatement(sql);
+
+                statement.setString(1, Integer.toString(film_id));
+                statement.executeUpdate();
+
+                System.out.println("film text a ete supprimer");
+                newRemoveFilm = true;
             }
         }
     }
@@ -1510,7 +1593,7 @@ public class Salika {
                         System.out.println("\n1. Créer un nouveau inventory\n2. Afficher les inventories\n3. Mettre à jour un inventory\n4. Supprimer un inventory\n5. Retour");
 
                     }else if(choix == 4){
-
+                        removeInventory(connection);
                         System.out.println("\n1. Créer un nouveau inventory\n2. Afficher les inventories\n3. Mettre à jour un inventory\n4. Supprimer un inventory\n5. Retour");
 
                     }else if(choix == 5){
@@ -1532,6 +1615,7 @@ public class Salika {
         boolean restart = false;
         while (!restart){
 
+            //demande si il veut ajouter ou quitter
             System.out.println("1. ajouter un inventory\n2.quitter");
             Scanner choix1 = new Scanner(System.in);
 
@@ -1566,6 +1650,7 @@ public class Salika {
                         }
                     }
 
+                    //check si il existe
                     String query = "SELECT * FROM inventory WHERE film_id = ? AND store_id = ?;";
                     PreparedStatement statement = connection.prepareStatement(query);
                     statement.setString(1, Integer.toString(film_id));
@@ -1577,7 +1662,7 @@ public class Salika {
                         System.err.println("existe deja");
                     } else {
 
-
+                        //si il existe pas alors on ajoute
                         query = "INSERT INTO inventory (film_id, store_id) VALUES (?, ?);";
                         statement = connection.prepareStatement(query);
                         statement.setString(1, Integer.toString(film_id));
@@ -1607,6 +1692,7 @@ public class Salika {
     public static void afficheInventory(Connection connection) throws SQLException{
         Statement stmt= connection.createStatement();
 
+        //print la table inventory
         ResultSet inventory= stmt.executeQuery("SELECT * FROM inventory");
 
         System.out.println();
@@ -1625,6 +1711,7 @@ public class Salika {
         boolean restart = false;
         while (!restart){
 
+            //demande si il veut modifier ou quitter
             System.out.println("1. modifier un inventory\n2.quitter");
             Scanner choix1 = new Scanner(System.in);
 
@@ -1672,6 +1759,7 @@ public class Salika {
                         }
                     }
 
+                    //check si il existe
                     String query = "SELECT * FROM inventory WHERE film_id = ? AND store_id = ? AND inventory_id = ?";
                     PreparedStatement statement = connection.prepareStatement(query);
                     statement.setString(1, Integer.toString(film_id));
@@ -1684,7 +1772,7 @@ public class Salika {
                         System.err.println("existe deja");
                     } else {
 
-
+                        //si il existe alors on modifie
                         query = "UPDATE inventory SET film_id = ?, store_id = ? WHERE inventory_id = ?";
                         statement = connection.prepareStatement(query);
                         statement.setString(1, Integer.toString(film_id));
@@ -1708,6 +1796,43 @@ public class Salika {
                 } else {
                     System.err.println("pas une option");
                 }
+            }
+        }
+    }
+    public static void removeInventory(Connection connection) throws SQLException{
+        afficheInventory(connection);
+
+        boolean newRemoveFilm = false;
+        while(!newRemoveFilm) {
+            ResultSet result;
+            PreparedStatement statement;
+
+            //demande l'id du inventory
+            System.out.println("quel inventory id voulez vous supprimer ?");
+            Scanner removeInvId = new Scanner(System.in);
+            int inventory_id = removeInvId.nextInt();
+
+            String sql = "SELECT * FROM inventory WHERE inventory_id = ?";
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, Integer.toString(inventory_id));
+            result = statement.executeQuery();
+
+
+            if (!result.next()) {
+                System.err.println("le film text existe pas :P");
+                newRemoveFilm = true;
+
+            } else {
+
+                //si il existe alors on suppprime
+                sql = "DELETE FROM inventory WHERE inventory_id = ?";
+                statement = connection.prepareStatement(sql);
+
+                statement.setString(1, Integer.toString(inventory_id));
+                statement.executeUpdate();
+
+                System.out.println("inventory a ete supprimer");
+                newRemoveFilm = true;
             }
         }
     }
@@ -1737,7 +1862,7 @@ public class Salika {
                         System.out.println("\n1. Créer un nouveau language\n2. Afficher les languages\n3. Mettre à jour un language\n4. Supprimer un language\n5. Retour");
 
                     }else if(choix == 4){
-
+                        removeLanguage(connection);
                         System.out.println("\n1. Créer un nouveau language\n2. Afficher les languages\n3. Mettre à jour un language\n4. Supprimer un language\n5. Retour");
 
                     }else if(choix == 5){
@@ -1759,6 +1884,7 @@ public class Salika {
         boolean restart = false;
         while (!restart){
 
+            //demande si il veut ajouter ou quitter
             System.out.println("1. ajouter un language\n2.quitter");
             Scanner choix1 = new Scanner(System.in);
 
@@ -1779,6 +1905,7 @@ public class Salika {
                         }
                     }
 
+                    //check si il existe
                     String query = "SELECT * FROM language WHERE name = ?;";
                     PreparedStatement statement = connection.prepareStatement(query);
                     statement.setString(1, name);
@@ -1790,7 +1917,7 @@ public class Salika {
 
                     } else {
 
-
+                        //si il existe alors on ajoute
                         query = "INSERT INTO language (name) VALUE (?);";
                         statement = connection.prepareStatement(query);
                         statement.setString(1, name);
@@ -1820,6 +1947,7 @@ public class Salika {
     public static void afficheLanguage(Connection connection) throws SQLException{
         Statement stmt= connection.createStatement();
 
+        //print la table language
         ResultSet language= stmt.executeQuery("SELECT * FROM language");
 
         System.out.println();
@@ -1837,6 +1965,7 @@ public class Salika {
         boolean restart = false;
         while (!restart){
 
+            //demande si il veut modifier ou quitter
             System.out.println("1.modifier un language\n2.quitter");
             Scanner choix1 = new Scanner(System.in);
 
@@ -1867,6 +1996,7 @@ public class Salika {
                         }
                     }
 
+                    //check si il existe
                     String query = "SELECT * FROM language WHERE name = ? AND language_id = ?";
                     PreparedStatement statement = connection.prepareStatement(query);
                     statement.setString(1, name);
@@ -1880,7 +2010,7 @@ public class Salika {
 
                     } else {
 
-
+                        //si il existe on modfie
                         query = "UPDATE language SET name = ? WHERE language_id = ?";
                         statement = connection.prepareStatement(query);
                         statement.setString(1, name);
@@ -1905,6 +2035,44 @@ public class Salika {
                 } else {
                     System.err.println("pas une option");
                 }
+            }
+        }
+    }
+    public static void removeLanguage(Connection connection) throws SQLException{
+        afficheLanguage(connection);
+
+        boolean newRemoveFilm = false;
+        while(!newRemoveFilm) {
+            ResultSet result;
+            PreparedStatement statement;
+
+            //demande l'id de language
+            System.out.println("quel language id voulez vous supprimer ?");
+            Scanner removeLangId = new Scanner(System.in);
+            int language_id = removeLangId.nextInt();
+
+            //check si il existe
+            String sql = "SELECT * FROM language WHERE language_id = ?";
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, Integer.toString(language_id));
+            result = statement.executeQuery();
+
+
+            if (!result.next()) {
+                System.err.println("le language existe pas :P");
+                newRemoveFilm = true;
+
+            } else {
+
+                //si il existe alors on supprime
+                sql = "DELETE FROM language WHERE language_id = ?";
+                statement = connection.prepareStatement(sql);
+
+                statement.setString(1, Integer.toString(language_id));
+                statement.executeUpdate();
+
+                System.out.println("language a ete supprimer");
+                newRemoveFilm = true;
             }
         }
     }
@@ -1942,6 +2110,7 @@ public class Salika {
     public static void afficheNicerFilm(Connection connection) throws SQLException{
         Statement stmt= connection.createStatement();
 
+        //print la table nicer_but_slower_film_list
         ResultSet NicerFilm= stmt.executeQuery("SELECT * FROM nicer_but_slower_film_list");
 
         System.out.println();
