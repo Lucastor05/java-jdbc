@@ -381,6 +381,44 @@ public class Salika {
         }
     }
 
+    public static void updateRental(Connection connection) throws SQLException{
+        afficheRental(connection);
+        Scanner scanner = new Scanner(System.in);
+
+        try {
+            System.out.print("Entrez l'ID de la location à mettre à jour : ");
+            int categoryId = scanner.nextInt();
+            scanner.nextLine();
+
+            // Vérifie si l'ID de la catégorie existe dans la table
+            String sql = "SELECT COUNT(*) FROM rental WHERE rental_id = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, categoryId);
+            ResultSet result = statement.executeQuery();
+            if (!result.next() || result.getInt(1) != 1) {
+                System.out.println("L'id de la location est non valide, veuillez réessayer.");
+                return;
+            }
+
+            System.out.print("Entrez le nouvel id de l'inventaire : ");
+            int inventoryId = scanner.nextInt();
+            System.out.print("Entrez le nouvel id de l'adresse : ");
+            int addressId = scanner.nextInt();
+
+
+            // Mise à jour de la catégorie dans la table
+            String querry = "UPDATE store SET manager_staff_id = ? AND address_id = ? WHERE store_id = ?";
+            statement = connection.prepareStatement(querry);
+            statement.setInt(1, inventoryId);
+            statement.setInt(2, addressId);
+            statement.setInt(3, categoryId);
+            statement.executeUpdate();
+            System.out.println("Le tableau Store à été mis à jour avec succès");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     /*Ventes par catégories de film*/
     public static void afficheSalesCategory(Connection connection) throws SQLException {
         Statement stmt= connection.createStatement();
@@ -611,6 +649,57 @@ public class Salika {
         }
     }
 
+    public static void updateStaff(Connection connection) throws SQLException{
+        afficheStaff(connection);
+        Scanner scanner = new Scanner(System.in);
+
+        try {
+            System.out.print("Entrez l'ID de la personne de l'équipe à mettre à jour : ");
+            int categoryId = scanner.nextInt();
+            scanner.nextLine();
+
+            // Vérifie si l'ID de la catégorie existe dans la table
+            String sql = "SELECT COUNT(*) FROM staff WHERE staff_id = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, categoryId);
+            ResultSet result = statement.executeQuery();
+            if (!result.next() || result.getInt(1) != 1) {
+                System.out.println("L'id de la personne est non valide, veuillez réessayer.");
+                return;
+            }
+
+            System.out.print("Entrez le nouveau prénom de la personne : ");
+            String firstName = scanner.nextLine();
+            System.out.print("Entrez son nouveau nom : ");
+            String lastName = scanner.nextLine();
+            System.out.print("Entrez le nouvel id de son adresse : ");
+            int addressId = scanner.nextInt();
+            System.out.print("Entrez son nouvel email : ");
+            String email = scanner.nextLine();
+            System.out.print("Entrez le nouvel id de son magasin : ");
+            int storeId = scanner.nextInt();
+            System.out.print("Entrez son nouveau pseudonyme : ");
+            String username = scanner.nextLine();
+            System.out.print("Entrez son nouveau mot de passe : ");
+            String password = scanner.nextLine();
+
+            // Mise à jour de la catégorie dans la table
+            String querry = "UPDATE staff SET first_name = ? AND last_name = ? AND address_id = ? AND email = ? AND store_id = ? AND username = ? AND password = ? WHERE staff_id = ?";
+            statement = connection.prepareStatement(querry);
+            statement.setString(1, firstName);
+            statement.setString(2, lastName);
+            statement.setInt(3, addressId);
+            statement.setString(4, email);
+            statement.setInt(5, storeId);
+            statement.setString(6, username);
+            statement.setString(7, password);
+            statement.executeUpdate();
+            System.out.println("Le tableau Staff à été mis à jour avec succès");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     /*Personnes dans l'équipe*/
     public static void afficheStaffList(Connection connection) throws SQLException {
         Statement stmt= connection.createStatement();
@@ -729,6 +818,44 @@ public class Salika {
             }else{
                 System.err.println("\nErreur: ceci n'est pas un nombre.");
             }
+        }
+    }
+
+    public static void updateStore(Connection connection) throws SQLException {
+        afficheStore(connection);
+        Scanner scanner = new Scanner(System.in);
+
+        try {
+            System.out.print("Entrez l'ID du magasin à mettre à jour : ");
+            int categoryId = scanner.nextInt();
+            scanner.nextLine();
+
+            // Vérifie si l'ID de la catégorie existe dans la table
+            String sql = "SELECT COUNT(*) FROM store WHERE store_id = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, categoryId);
+            ResultSet result = statement.executeQuery();
+            if (!result.next() || result.getInt(1) != 1) {
+                System.out.println("L'id du magasin est non valide, veuillez réessayer.");
+                return;
+            }
+
+            System.out.print("Entrez le nouvel id de l'équipe de management : ");
+            int managerStaffId = scanner.nextInt();
+            System.out.print("Entrez le nouvel id de l'adresse : ");
+            int addressId = scanner.nextInt();
+
+
+            // Mise à jour de la catégorie dans la table
+            String querry = "UPDATE store SET manager_staff_id = ? AND address_id = ? WHERE store_id = ?";
+            statement = connection.prepareStatement(querry);
+            statement.setInt(1, managerStaffId);
+            statement.setInt(2, addressId);
+            statement.setInt(3, categoryId);
+            statement.executeUpdate();
+            System.out.println("Le tableau Store à été mis à jour avec succès");
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
