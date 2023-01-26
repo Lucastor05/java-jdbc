@@ -131,12 +131,15 @@ public class Salika {
     }
 
     /*Paiements*/
+    // Afficher les paiements
     public static void affichePayment(Connection connection) throws SQLException {
         Statement stmt= connection.createStatement();
 
+        // Chercher les informations dans la base de données
         ResultSet argent= stmt.executeQuery("SELECT * FROM payment");
         System.out.println();
 
+        // Afficher ces informations pour l'utilisateur
         while (argent.next()) {
             System.out.println("payment_id: " + argent.getString(1));
             System.out.println("customer_id: " + argent.getString(2));
@@ -149,25 +152,27 @@ public class Salika {
         }
     }
 
+    // Ajouter des paiements
     public static void addPayment(Connection connection) throws SQLException {
         affichePayment(connection);
-        // utiliser un Scanner pour lire les entrées de l'utilisateur
         Scanner scanner = new Scanner(System.in);
 
+        // Initialiser des variables pour enregistrer les données que rentre l'utilisateur
         int customerId = 0;
         int staffId = 0;
         int rentalId = 0;
         float amount = 0;
 
+        // Initialiser des booléens pour les boucles while
         boolean isCustomerIdValid = false;
         boolean isStaffIdValid = false;
         boolean isRentalIdValid = false;
         boolean isAmountValid = false;
 
+        // Demander les informations à l'utilisateur DEBUT
         while (!isCustomerIdValid) {
             System.out.print("Entrez l'id du client : ");
             Scanner cust = new Scanner(System.in);
-            // vérifier si le nom est un nombre
             if (cust.hasNextInt()){
                 customerId = cust.nextInt();
                 isCustomerIdValid = true;
@@ -179,7 +184,6 @@ public class Salika {
         while (!isStaffIdValid) {
             System.out.print("Entrez l'id du staff s'occupant du client : ");
             Scanner staff = new Scanner(System.in);
-            // vérifier si le nom est un nombre
             if (staff.hasNextInt()){
                 staffId = staff.nextInt();
                 isStaffIdValid = true;
@@ -191,7 +195,6 @@ public class Salika {
         while (!isRentalIdValid) {
             System.out.print("Entrez l'id de la location : ");
             Scanner rent = new Scanner(System.in);
-            // vérifier si le nom est un nombre
             if (rent.hasNextInt()){
                 rentalId = rent.nextInt();
                 isRentalIdValid = true;
@@ -203,7 +206,6 @@ public class Salika {
         while (!isAmountValid) {
             System.out.print("Entrez une quantité d'argent : ");
             Scanner mount = new Scanner(System.in);
-            // vérifier si le nom est un nombre
             if (mount.hasNextFloat()){
                 amount = mount.nextFloat();
                 isAmountValid = true;
@@ -211,29 +213,33 @@ public class Salika {
                 System.out.println("Vous ne pouvez entrez qu'un nombre décimal pour l'id de la location.");
             }
         }
+        // Demander les informations à l'utilisateur FIN
 
-        // créer une requête préparée pour insérer les données dans la table
+        // Créer une requête préparée pour insérer les données dans la table
         String sql3 = "INSERT INTO payment (customer_id, staff_id, rental_id, amount) VALUES (?, ?, ?, ?)";
         PreparedStatement statement2 = connection.prepareStatement(sql3);
 
-        // définir les valeurs pour les paramètres de la requête
+        // Définir les valeurs pour les paramètres de la requête
         statement2.setInt(1, customerId);
         statement2.setInt(2, staffId);
         statement2.setInt(3, rentalId);
         statement2.setFloat(4, amount);
 
-        // exécuter la requête
+        // Exécuter la requête
         statement2.executeUpdate();
 
     }
 
+    // Supprimer des paiements
     public static void deletePayment(Connection connection) throws SQLException {
+        // Initialiser un booléens pour la boucle while
         boolean newPaymentValide = false;
         while(!newPaymentValide) {
             affichePayment(connection);
             System.out.print("Entrez l'id du paiement que vous souhaitez supprimer : ");
             Scanner newPayment = new Scanner(System.in);
 
+            // Vérifier si l'id existe dans la table
             if (newPayment.hasNextInt()) {
                 String name = newPayment.next();
                 String query = "SELECT * FROM payment WHERE payment_id = ?";
@@ -241,6 +247,7 @@ public class Salika {
                 statement.setString(1, name);
                 ResultSet resultSet = statement.executeQuery();
 
+                // Supprimer s'il n'y a pas d'erreurs
                 if (!resultSet.next()) {
                     System.err.println("\nErreur: l'id de ce paiement n'existe pas.");
                 } else {
@@ -264,16 +271,18 @@ public class Salika {
         }
     }
 
+    // Modifier les paiements
     public static void updatePayment(Connection connection) throws SQLException{
         affichePayment(connection);
         Scanner scanner = new Scanner(System.in);
 
+        // Choisir l'id de la table à modifier
         try {
             System.out.print("Entrez l'ID du paiement à mettre à jour : ");
             int categoryId = scanner.nextInt();
             scanner.nextLine();
 
-            // Vérifie si l'ID de la catégorie existe dans la table
+            // Vérifie si l'id de la catégorie existe dans la table
             String sql = "SELECT COUNT(*) FROM payment WHERE payment_id = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, categoryId);
@@ -283,6 +292,7 @@ public class Salika {
                 return;
             }
 
+            // Demander à l'utilisateur les informations nécessaires
             System.out.print("Entrez le nouvel id du client : ");
             int customerId = scanner.nextInt();
             System.out.print("Entrez le nouvel id de la personne du staff s'occupant du client : ");
@@ -310,12 +320,15 @@ public class Salika {
     }
 
     /*Locations (argent)*/
+    // Afficher les locations
     public static void afficheRental(Connection connection) throws SQLException {
         Statement stmt= connection.createStatement();
 
+        // Chercher les informations dans la base de données
         ResultSet rent= stmt.executeQuery("SELECT * FROM rental");
         System.out.println();
 
+        // Afficher ces informations pour l'utilisateur
         while (rent.next()) {
             System.out.println("rental_id: " + rent.getString(1));
             System.out.println("rental_date: " + rent.getString(2));
@@ -328,23 +341,25 @@ public class Salika {
         }
     }
 
+    // Ajouter des locations
     public static void addRental(Connection connection) throws SQLException {
         afficheRental(connection);
-        // utiliser un Scanner pour lire les entrées de l'utilisateur
         Scanner scanner = new Scanner(System.in);
 
+        // Initialiser des variables pour enregistrer les données que rentre l'utilisateur
         int inventoryId = 0;
         int customerId = 0;
         int staffId = 0;
 
+        // Initialiser des booléens pour les boucles while
         boolean isInventoryIdValid = false;
         boolean isCustomerIdValid = false;
         boolean isStaffIdValid = false;
 
+        // Demander les informations à l'utilisateur DEBUT
         while (!isInventoryIdValid) {
             System.out.print("Entrez l'id de la location : ");
             Scanner invent = new Scanner(System.in);
-            // vérifier si le nom est un nombre
             if (invent.hasNextInt()){
                 inventoryId = invent.nextInt();
                 isInventoryIdValid = true;
@@ -355,7 +370,6 @@ public class Salika {
         while (!isCustomerIdValid) {
             System.out.print("Entrez l'id de la location : ");
             Scanner cust = new Scanner(System.in);
-            // vérifier si le nom est un nombre
             if (cust.hasNextInt()){
                 customerId = cust.nextInt();
                 isCustomerIdValid = true;
@@ -366,7 +380,6 @@ public class Salika {
         while (!isStaffIdValid) {
             System.out.print("Entrez l'id de la location : ");
             Scanner staffy = new Scanner(System.in);
-            // vérifier si le nom est un nombre
             if (staffy.hasNextInt()){
                 staffId = staffy.nextInt();
                 isStaffIdValid = true;
@@ -374,21 +387,23 @@ public class Salika {
                 System.out.println("Vous ne pouvez entrez qu'un nombre entier pour l'id de la location.");
             }
         }
+        // Demander les informations à l'utilisateur FIN
 
-        // créer une requête préparée pour insérer les données dans la table
+        // Créer une requête préparée pour insérer les données dans la table
         String sql3 = "INSERT INTO rental (inventory_id, customer_id, staff_id) VALUES (?, ?, ?)";
         PreparedStatement statement2 = connection.prepareStatement(sql3);
 
-        // définir les valeurs pour les paramètres de la requête
+        // Définir les valeurs pour les paramètres de la requête
         statement2.setInt(1, inventoryId);
         statement2.setInt(2, customerId);
         statement2.setInt(3, staffId);
 
-        // exécuter la requête
+        // Exécuter la requête
         statement2.executeUpdate();
 
     }
 
+    // Supprimer des locations
     public static void deleteRental(Connection connection) throws SQLException {
         boolean newRentalValide = false;
         while(!newRentalValide) {
@@ -426,6 +441,7 @@ public class Salika {
         }
     }
 
+    // Modifier des locations
     public static void updateRental(Connection connection) throws SQLException{
         afficheRental(connection);
         Scanner scanner = new Scanner(System.in);
@@ -467,6 +483,7 @@ public class Salika {
     }
 
     /*Ventes par catégories de film*/
+    // Afficher les catégories de films
     public static void afficheSalesCategory(Connection connection) throws SQLException {
         Statement stmt= connection.createStatement();
 
@@ -474,8 +491,8 @@ public class Salika {
         System.out.println();
 
         while (salesCat.next()) {
-            System.out.println("rental_id: " + salesCat.getString(1));
-            System.out.println("rental_date: " + salesCat.getString(2));
+            System.out.println("category: " + salesCat.getString(1));
+            System.out.println("total_sales: " + salesCat.getString(2));
             System.out.println("========================================================================================================");
         }
     }
