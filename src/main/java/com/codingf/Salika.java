@@ -61,6 +61,10 @@ public class Salika {
 
                         }else if(choix == 9) {
                             choiceFilm(connection);
+
+                        }else if(choix == 10) {
+                            choiceFilmActor(connection);
+
                         }else if(choix == 24){
                             System.exit(-1);
                         }
@@ -448,7 +452,7 @@ public class Salika {
         }
     }
     public static void updateFilm(Connection connection) throws SQLException {
-
+        afficheFilm(connection);
         boolean newUpdateFilm = false;
         while (!newUpdateFilm) {
             System.out.println("1. modifier le film\n2.quitter");
@@ -677,6 +681,43 @@ public class Salika {
 
 
     /*film_actor*/
+    public static void choiceFilmActor(Connection connection) throws SQLException{
+        System.out.println("\n1. Créer un nouveau film actor\n2. Afficher les films actors\n3. Mettre à jour un film actor\n4. Supprimer un film actor\n5. Retour");
+        System.out.println("Entrez votre choix :");
+        Scanner choice = new Scanner(System.in);
+
+        boolean valide = false;
+        while(!valide) {
+            if (choice.hasNextInt()){
+                int choix = choice.nextInt();
+                if(choix <= 5 || choix >= 1){
+                    if(choix == 1){
+                        addFilmActor(connection);
+                        System.out.println("\n1. Créer un nouveau film actor\n2. Afficher les films actors\n3. Mettre à jour un film actor\n4. Supprimer un film actor\n5. Retour");
+
+                    }else if(choix == 2){
+                        afficheFilmActor(connection);
+                        System.out.println("\n1. Créer un nouveau film actor\n2. Afficher les films actors\n3. Mettre à jour un film actor\n4. Supprimer un film actor\n5. Retour");
+
+                    }else if(choix == 3){
+                        System.out.println("\n1. Créer un nouveau film actor\n2. Afficher les films actors\n3. Mettre à jour un film actor\n4. Supprimer un film actor\n5. Retour");
+
+                    }else if(choix == 4){
+                        System.out.println("\n1. Créer un nouveau film actor\n2. Afficher les films actors\n3. Mettre à jour un film actor\n4. Supprimer un film actor\n5. Retour");
+
+                    }else if(choix == 5){
+                        System.out.println("Quitter");
+                        valide = true;
+                    }
+                }else {
+                    System.err.println("Erreur: Le nombre choisi ne correspond à aucun choix proposé !!!");
+                }
+
+            }else {
+                System.err.println("Erreur: Ceci n'est pas un nombre !!!");
+            }
+        }
+    }
     public static void afficheFilmActor(Connection connection) throws SQLException{
         Statement stmt= connection.createStatement();
 
@@ -690,6 +731,95 @@ public class Salika {
             System.out.println("========================================================================================================");
         }
     }
+    public static void addFilmActor(Connection connection) throws SQLException{
+        afficheFilmActor(connection);
+
+        boolean restart = false;
+        while (!restart){
+
+            System.out.println("1. ajouter un film actor\n2.quitter");
+            Scanner choix1 = new Scanner(System.in);
+
+            if (choix1.hasNextInt()){
+                int choix1def = choix1.nextInt();
+
+                if (choix1def == 1){
+                    int actor_id = 0;
+                    int film_id = 0;
+
+                    boolean loop = false;
+                    while(!loop) {
+                        System.out.println("actor id:");
+                        Scanner newActorId = new Scanner(System.in);
+                        if (newActorId.hasNextInt()) {
+                            actor_id = newActorId.nextInt();
+                            loop = true;
+                        } else {
+                            System.err.println("pas un nombre");
+                        }
+                    }
+
+                    boolean loop2 = false;
+                    while (!loop2){
+                        System.out.println("film id:");
+                        Scanner newFilmId = new Scanner(System.in);
+                        if (newFilmId.hasNextInt()) {
+                            film_id = newFilmId.nextInt();
+                            loop2 = true;
+                        } else {
+                            System.err.println("pas un nombre");
+                        }
+                    }
+
+                    String query = "SELECT * FROM film_actor WHERE actor_id = ? AND film_id = ?;";
+                    PreparedStatement statement = connection.prepareStatement(query);
+                    statement.setString(1, Integer.toString(actor_id));
+                    statement.setString(2, Integer.toString(film_id));
+
+                    ResultSet result1 = statement.executeQuery();
+
+                    if (result1.next()){
+                        System.err.println("existe deja");
+                        break;
+                    }
+
+
+                    query = "INSERT INTO film_actor (actor_id, film_id) VALUES (?, ?);";
+                    statement = connection.prepareStatement(query);
+                    statement.setString(1, Integer.toString(actor_id));
+                    statement.setString(2, Integer.toString(film_id));
+
+                    int result2 = statement.executeUpdate();
+
+                    if (result2 == 1) {
+                        System.out.println("Les valeurs ont été insérée avec succès dans la table film_actor");
+                    } else {
+                        System.err.println("Erreur: lors de l'insertion de les valeurs dans la table film_actor");
+                    }
+
+                    restart = true;
+
+
+
+
+                } else if (choix1def == 2){
+                    System.out.println("Quitter :D");
+
+                } else {
+                    System.err.println("pas une option");
+                }
+            }
+        }
+    }
+    public static void updateFilmActor(Connection connection) throws SQLException{
+
+    }
+
+
+
+
+
+
 
     public static void afficheFilmCate(Connection connection) throws SQLException{
         Statement stmt= connection.createStatement();
