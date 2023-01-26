@@ -88,6 +88,7 @@ public class Salika {
                         afficheCountry(connection);
                     }else if(choix == 3){
 
+                        valide = true;
                     }else if(choix == 4){
 
                     }else if(choix == 5){
@@ -138,11 +139,92 @@ public class Salika {
 
         while (argent.next()) {
             System.out.println("payment_id: " + argent.getString(1));
+            System.out.println("customer_id: " + argent.getString(2));
+            System.out.println("staff_id: " + argent.getString(3));
+            System.out.println("rental_id: " + argent.getString(4));
             System.out.println("amount: " + argent.getString(5));
             System.out.println("payment_date: " + argent.getString(6));
             System.out.println("last_update: " + argent.getString(7));
             System.out.println("========================================================================================================");
         }
+    }
+
+    public static void addPayment(Connection connection) throws SQLException {
+        affichePayment(connection);
+        // utiliser un Scanner pour lire les entrées de l'utilisateur
+        Scanner scanner = new Scanner(System.in);
+
+        int customerId = 0;
+        int staffId = 0;
+        int rentalId = 0;
+        float amount = 0;
+
+        boolean isCustomerIdValid = false;
+        boolean isStaffIdValid = false;
+        boolean isRentalIdValid = false;
+        boolean isAmountValid = false;
+
+        while (!isCustomerIdValid) {
+            System.out.print("Entrez l'id du client : ");
+            Scanner cust = new Scanner(System.in);
+            // vérifier si le nom est un nombre
+            if (cust.hasNextInt()){
+                customerId = cust.nextInt();
+                isCustomerIdValid = true;
+            } else {
+                System.out.println("Vous ne pouvez entrez qu'un nombre entier pour l'id du client.");
+            }
+        }
+
+        while (!isStaffIdValid) {
+            System.out.print("Entrez l'id du staff s'occupant du client : ");
+            Scanner staff = new Scanner(System.in);
+            // vérifier si le nom est un nombre
+            if (staff.hasNextInt()){
+                staffId = staff.nextInt();
+                isStaffIdValid = true;
+            } else {
+                System.out.println("Vous ne pouvez entrez qu'un nombre entier pour l'id du staff.");
+            }
+        }
+
+        while (!isRentalIdValid) {
+            System.out.print("Entrez l'id de la location : ");
+            Scanner rent = new Scanner(System.in);
+            // vérifier si le nom est un nombre
+            if (rent.hasNextInt()){
+                rentalId = rent.nextInt();
+                isRentalIdValid = true;
+            } else {
+                System.out.println("Vous ne pouvez entrez qu'un nombre entier pour l'id de la location.");
+            }
+        }
+
+        while (!isAmountValid) {
+            System.out.print("Entrez une quantité d'argent : ");
+            Scanner mount = new Scanner(System.in);
+            // vérifier si le nom est un nombre
+            if (mount.hasNextFloat()){
+                amount = mount.nextFloat();
+                isAmountValid = true;
+            } else {
+                System.out.println("Vous ne pouvez entrez qu'un nombre décimal pour l'id de la location.");
+            }
+        }
+
+        // créer une requête préparée pour insérer les données dans la table
+        String sql3 = "INSERT INTO payment (customer_id, staff_id, rental_id, amount) VALUES (?, ?, ?, ?)";
+        PreparedStatement statement2 = connection.prepareStatement(sql3);
+
+        // définir les valeurs pour les paramètres de la requête
+        statement2.setInt(1, customerId);
+        statement2.setInt(2, staffId);
+        statement2.setInt(3, rentalId);
+        statement2.setFloat(4, amount);
+
+        // exécuter la requête
+        statement2.executeUpdate();
+
     }
 
     /*Locations (argent)*/
@@ -155,10 +237,74 @@ public class Salika {
         while (rent.next()) {
             System.out.println("rental_id: " + rent.getString(1));
             System.out.println("rental_date: " + rent.getString(2));
+            System.out.println("inventory_id: " + rent.getString(3));
+            System.out.println("customer_id: " + rent.getString(4));
             System.out.println("return_date: " + rent.getString(5));
+            System.out.println("staff_id: " + rent.getString(6));
             System.out.println("last_update: " + rent.getString(7));
             System.out.println("========================================================================================================");
         }
+    }
+
+    public static void addRental(Connection connection) throws SQLException {
+        afficheRental(connection);
+        // utiliser un Scanner pour lire les entrées de l'utilisateur
+        Scanner scanner = new Scanner(System.in);
+
+        int inventoryId = 0;
+        int customerId = 0;
+        int staffId = 0;
+
+        boolean isInventoryIdValid = false;
+        boolean isCustomerIdValid = false;
+        boolean isStaffIdValid = false;
+
+        while (!isInventoryIdValid) {
+            System.out.print("Entrez l'id de la location : ");
+            Scanner invent = new Scanner(System.in);
+            // vérifier si le nom est un nombre
+            if (invent.hasNextInt()){
+                inventoryId = invent.nextInt();
+                isInventoryIdValid = true;
+            } else {
+                System.out.println("Vous ne pouvez entrez qu'un nombre entier pour l'id de la location.");
+            }
+        }
+        while (!isCustomerIdValid) {
+            System.out.print("Entrez l'id de la location : ");
+            Scanner cust = new Scanner(System.in);
+            // vérifier si le nom est un nombre
+            if (cust.hasNextInt()){
+                customerId = cust.nextInt();
+                isCustomerIdValid = true;
+            } else {
+                System.out.println("Vous ne pouvez entrez qu'un nombre entier pour l'id de la location.");
+            }
+        }
+        while (!isStaffIdValid) {
+            System.out.print("Entrez l'id de la location : ");
+            Scanner staffy = new Scanner(System.in);
+            // vérifier si le nom est un nombre
+            if (staffy.hasNextInt()){
+                staffId = staffy.nextInt();
+                isStaffIdValid = true;
+            } else {
+                System.out.println("Vous ne pouvez entrez qu'un nombre entier pour l'id de la location.");
+            }
+        }
+
+        // créer une requête préparée pour insérer les données dans la table
+        String sql3 = "INSERT INTO rental (inventory_id, customer_id, staff_id) VALUES (?, ?, ?)";
+        PreparedStatement statement2 = connection.prepareStatement(sql3);
+
+        // définir les valeurs pour les paramètres de la requête
+        statement2.setInt(1, inventoryId);
+        statement2.setInt(2, customerId);
+        statement2.setInt(3, staffId);
+
+        // exécuter la requête
+        statement2.executeUpdate();
+
     }
 
     /*Ventes par catégories de film*/
@@ -198,8 +344,10 @@ public class Salika {
         System.out.println();
 
         while (staff.next()) {
+            System.out.println("staff_id: " + staff.getString(1));
             System.out.println("first_name: " + staff.getString(2));
             System.out.println("last_name: " + staff.getString(3));
+            System.out.println("address_id: " + staff.getString(4));
             System.out.println("email: " + staff.getString(6));
             System.out.println("store_id: " + staff.getString(7));
             System.out.println("active: " + staff.getString(8));
@@ -211,67 +359,144 @@ public class Salika {
     }
 
     public static void addStaff(Connection connection) throws SQLException {
-        PreparedStatement statement = null;
-        ResultSet result = null;
+        afficheStaff(connection);
+        // utiliser un Scanner pour lire les entrées de l'utilisateur
         Scanner scanner = new Scanner(System.in);
 
-        try {
-            // Connexion à la base de données
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/database_name", "username", "password");
-            // Demande à l'utilisateur pour les valeurs
-            System.out.print("Entrez le prénom de l'employé : ");
-            String first_name = scanner.nextLine();
-            System.out.print("Entrez son nom : ");
-            String last_name = scanner.nextLine();
-            System.out.print("Entrez son email : ");
-            String email = scanner.nextLine();
-            System.out.print("Entrez son pseudonyme : ");
-            String username = scanner.nextLine();
-            System.out.print("Entrez son mot de passe : ");
-            String password = scanner.nextLine();
+        // Variables pour stocker les entrées de l'utilisateur
+        String firstName = "";
+        String lastName = "";
+        int addressId = 0;
+        String EMail = "";
+        int storeId = 0;
+        String username = "";
+        String password = "";
+        boolean isFirstNameValid = false;
+        boolean isLastNameValid = false;
+        boolean isAddressIdValid = false;
+        boolean isEmailValid = false;
+        boolean isStoreIdValid = false;
+        boolean isUsernameValid = false;
+        boolean isPasswordValid = false;
+        boolean isStaffExist = false;
 
-
-            // Check if the actor already exists
-            String sql = "SELECT * FROM staff WHERE first_name = ? AND last_name = ? AND email = ? ";
-            statement = connection.prepareStatement(sql);
-            statement.setString(1, first_name);
-            statement.setString(2, last_name);
-            statement.setString(3, email);
-            result = statement.executeQuery();
-            if (result.next()) {
-                System.out.println("Actor already exists in the table.");
-                return;
-            }
-            // Create the SQL statement
-            sql = "INSERT INTO staff (first_name, last_name, email, active, username, password) VALUES (?, ?, ?)";
-            statement = connection.prepareStatement(sql);
-
-            // Bind the variables to the prepared statement
-            statement.setString(1, first_name);
-            statement.setString(2, last_name);
-            statement.setString(3, email);
-
-            // Execute the statement
-            statement.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            // Close the connection, statement, and result set
+        while (!isFirstNameValid) {
+            System.out.print("Entrez le prénom de l'équipier : ");
+            firstName = scanner.next();
+            // vérifier si le prénom est un nombre
             try {
-                if (result != null) {
-                    result.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-                scanner.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
+                Double.parseDouble(firstName);
+                System.out.println("Vous ne pouvez pas entrer un nombre pour le prénom.");
+            } catch (NumberFormatException e) {
+                isFirstNameValid = true;
             }
+        }
+
+        while (!isLastNameValid) {
+            System.out.print("Entrez son nom : ");
+            lastName = scanner.next();
+            // vérifier si le nom est un nombre
+            try {
+                Double.parseDouble(lastName);
+                System.out.println("Vous ne pouvez pas entrer un nombre pour le nom.");
+            } catch (NumberFormatException e) {
+                isLastNameValid = true;
+            }
+        }
+
+        while (!isAddressIdValid) {
+            System.out.print("Entrez le nombre de l'adresse id de la personne : ");
+            Scanner idadress = new Scanner(System.in);
+            // vérifier si l'id est autre qu'un nombre
+            if (idadress.hasNextInt()){
+                addressId = idadress.nextInt();
+                isAddressIdValid = true;
+            } else {
+                System.out.println("Vous ne pouvez entrez qu'un nombre entier pour l'adresse id.");
+            }
+        }
+
+        while (!isEmailValid){
+            System.out.print("Entrez son email : ");
+            Scanner email = new Scanner(System.in);
+            if (email.hasNext()){
+                EMail = email.next();
+                isEmailValid = true;
+            } else {
+                System.out.println("L'adresse email ne peut pas être vide.");
+            }
+        }
+
+        while (!isStoreIdValid) {
+            System.out.print("Entrez le nombre du store id de la personne : ");
+            Scanner idStore = new Scanner(System.in);
+            // vérifier si le nom est un nombre
+            if (idStore.hasNextInt()){
+                storeId = idStore.nextInt();
+                isStoreIdValid = true;
+            } else {
+                System.out.println("Vous ne pouvez entrez qu'un nombre entier pour l'id du store.");
+            }
+        }
+
+        while (!isUsernameValid){
+            System.out.print("Entrez son pseudonyme : ");
+            Scanner User = new Scanner(System.in);
+            if (User.hasNext()){
+                username = User.next();
+                isUsernameValid = true;
+            } else {
+                System.out.println("Le pseudonyme ne peut pas être vide.");
+            }
+        }
+
+        while (!isPasswordValid){
+            System.out.print("Entrez son mot de passe : ");
+            Scanner Pass = new Scanner(System.in);
+            if (Pass.hasNext()){
+                password = Pass.next();
+                isPasswordValid = true;
+            } else {
+                System.out.println("Le mot de passe ne peut pas être vide.");
+            }
+        }
+
+        // créer une requête pour vérifier si l'acteur existe déjà dans la table
+        String sql = "SELECT * FROM staff WHERE first_name = ? AND last_name = ? AND email = ?";
+        PreparedStatement statement = connection.prepareStatement(sql);
+
+        // définir les valeurs pour les paramètres de la requête
+        statement.setString(1, firstName);
+        statement.setString(2, lastName);
+        statement.setString(3, EMail);
+
+        // exécuter la requête
+        ResultSet resultSet = statement.executeQuery();
+
+        // vérifier si l'acteur existe déjà dans la table
+        while (resultSet.next()) {
+            isStaffExist = true;
+            break;
+        }
+
+        if (isStaffExist) {
+            System.out.println("L'acteur existe déjà dans la base de données.");
+        } else {
+            // créer une requête préparée pour insérer les données dans la table
+            String sql2 = "INSERT INTO staff (first_name, last_name, address_id, email, store_id, username, password) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            statement = connection.prepareStatement(sql2);
+
+            // définir les valeurs pour les paramètres de la requête
+            statement.setString(1, firstName);
+            statement.setString(2, lastName);
+            statement.setInt(3, addressId);
+            statement.setString(4, EMail);
+            statement.setInt(5, storeId);
+            statement.setString(6, username);
+            statement.setString(7, password);
+
+            // exécuter la requête
+            statement.executeUpdate();
         }
     }
 
@@ -283,6 +508,7 @@ public class Salika {
         System.out.println();
 
         while (staffList.next()) {
+            System.out.println("ID: " + staffList.getString(1));
             System.out.println("name: " + staffList.getString(2));
             System.out.println("adress: " + staffList.getString(3));
             System.out.println("zip code: " + staffList.getString(4));
@@ -303,8 +529,59 @@ public class Salika {
 
         while (store.next()) {
             System.out.println("store_id: " + store.getString(1));
+            System.out.println("manager_staff_id: " + store.getString(2));
+            System.out.println("adress_id: " + store.getString(3));
             System.out.println("last_update: " + store.getString(4));
             System.out.println("========================================================================================================");
         }
     }
+
+    public static void addStore(Connection connection) throws SQLException{
+        afficheStore(connection);
+        // utiliser un Scanner pour lire les entrées de l'utilisateur
+        Scanner scanner = new Scanner(System.in);
+
+        int managerStaffId = 0;
+        int addressId = 0;
+
+        boolean isManagerStaffIdValid = false;
+        boolean isAddressIdValid = false;
+
+        while (!isManagerStaffIdValid) {
+            System.out.print("Entrez le nombre du store id de la personne : ");
+            Scanner manage = new Scanner(System.in);
+            // vérifier si le nom est un nombre
+            if (manage.hasNextInt()){
+                managerStaffId = manage.nextInt();
+                isManagerStaffIdValid = true;
+            } else {
+                System.out.println("Vous ne pouvez entrez qu'un nombre entier pour l'id du store.");
+            }
+        }
+
+        while (!isAddressIdValid) {
+            System.out.print("Entrez le nombre du store id de la personne : ");
+            Scanner address = new Scanner(System.in);
+            // vérifier si le nom est un nombre
+            if (address.hasNextInt()){
+                addressId = address.nextInt();
+                isAddressIdValid = true;
+            } else {
+                System.out.println("Vous ne pouvez entrez qu'un nombre entier pour l'id du store.");
+            }
+
+            // créer une requête préparée pour insérer les données dans la table
+            String sql3 = "INSERT INTO store (manager_store_id, address_id) VALUES (?, ?)";
+            PreparedStatement statement2 = connection.prepareStatement(sql3);
+
+            // définir les valeurs pour les paramètres de la requête
+            statement2.setInt(1, managerStaffId);
+            statement2.setInt(2, addressId);
+
+            // exécuter la requête
+            statement2.executeUpdate();
+        }
+
+    }
+
 }
