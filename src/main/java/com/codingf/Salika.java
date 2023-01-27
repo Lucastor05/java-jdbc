@@ -13,11 +13,11 @@ public class Salika {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e){
-            System.err.println("probleme chargement sur driver");
+            System.err.println("Problème de chargement sur le driver.");
             System.exit(-1);
         }
 
-        System.out.println("Le driver est chargÃ© !!!");
+        System.out.println("Le driver est chargé.");
 
         ResourceBundle bundle = ResourceBundle.getBundle("db");
 
@@ -34,9 +34,9 @@ public class Salika {
                 DriverManager.getConnection(URL,username,password);
 
         if (connection == null) {
-            System.err.println("erreur de connexion !!!!");
+            System.err.println("Une erreur de connexion est survenue.");
         } else {
-            System.err.println("connexion etablie");
+            System.err.println("La connexion a été établie.");
 
         }
 
@@ -51,7 +51,7 @@ public class Salika {
             boolean valide = false;
             while (!valide) {
 
-                System.out.println("\n\n1. actor\n2. actor_info\n3. address\n4. category\n5. city\n6. country\n7. customer\n8. customer_list\n9. film\n10. film_actor\n11. film_category\n12. film_list\n13. film_text\n14. inventory\n15. language\n16. nicer_but_slower_film_list\n17. payment\n18. rental\n19. sales_by_film_category\n20. sales_by_store\n21. staff\n22. staff_list\n23. store\n24. Exit");
+                System.out.println("\n\n1. actor\n2. actor_info\n3. address\n4. category\n5. city\n6. country\n7. customer\n8. customer_list\n9. film\n10. film_actor\n11. film_category\n12. film_list\n13. film_text\n14. inventory\n15. language\n16. nicer_but_slower_film_list\n17. payment\n18. rental\n19. sales_by_film_category\n20. sales_by_store\n21. staff\n22. staff_list\n23. store\n24. exit");
                 System.out.println("Entrez votre choix :");
                 Scanner choice = new Scanner(System.in);
 
@@ -146,10 +146,10 @@ public class Salika {
                             System.exit(-1);
                         }
                     } else {
-                        System.err.println("Erreur: Le nombre choisi ne correspond à aucun choix proposé !!!");
+                        System.err.println("Erreur : le nombre choisi ne correspond à aucun choix proposé.");
                     }
                 } else {
-                    System.err.println("Erreur: Ceci n'est pas un nombre !!!");
+                    System.err.println("Erreur : vous n'avez pas tapé de nombre.");
                 }
             }
         }
@@ -184,10 +184,10 @@ public class Salika {
                             break;
                         }
                     } else {
-                        System.err.println("\nErreur: Le nombre choisi ne correspond à aucun choix proposé !!!");
+                        System.err.println("\nErreur : le nombre choisi ne correspond à aucun choix proposé.");
                     }
                 } else {
-                    System.err.println("\nErreur: Ceci n'est pas un nombre !!!");
+                    System.err.println("\nErreur : vous n'avez pas tapé de nombre.");
                 }
             }
         }
@@ -224,11 +224,11 @@ public class Salika {
                             break;
                         }
                     }else {
-                        System.err.println("\nErreur: Le nombre choisi ne correspond à aucun choix proposé !!!");
+                        System.err.println("\nErreur : le nombre choisi ne correspond à aucun choix proposé !!!");
                     }
 
                 }else {
-                    System.err.println("\nErreur: Ceci n'est pas un nombre !!!");
+                    System.err.println("\nErreur : vous n'avez pas tapé de nombre.");
                 }
             }
         }
@@ -241,7 +241,7 @@ public class Salika {
 
             boolean valide = false;
             while(!valide) {
-                System.out.println("\n1. Créer une nouvelle categorie\n2. Afficher les categories\n3. Mettre à jour une categorie\n4. Supprimer une categorie\n5. Retour");
+                System.out.println("\n1. Créer une nouvelle catégorie\n2. Afficher les catégories\n3. Mettre à jour une catégorie\n4. Supprimer une catégorie\n5. Retour");
                 System.out.println("Entrez votre choix :");
                 Scanner choice = new Scanner(System.in);
                 if (choice.hasNextInt()){
