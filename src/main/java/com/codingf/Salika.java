@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 import java.util.Scanner;
 
 public class Salika {
+
     public static void main(String[] args) throws SQLException {
 
         try {
@@ -154,6 +155,7 @@ public class Salika {
             }
         }
     }
+
     public static void choiceActor(Connection connection) throws SQLException{
         boolean restart = true;
 
@@ -224,7 +226,7 @@ public class Salika {
                             break;
                         }
                     }else {
-                        System.err.println("\nErreur : le nombre choisi ne correspond à aucun choix proposé !!!");
+                        System.err.println("\nErreur : le nombre choisi ne correspond à aucun choix proposé.");
                     }
 
                 }else {
@@ -264,11 +266,11 @@ public class Salika {
                             break;
                         }
                     }else {
-                        System.err.println("\nErreur: Le nombre choisi ne correspond à aucun choix proposé !!!");
+                        System.err.println("\nErreur : le nombre choisi ne correspond à aucun choix proposé.");
                     }
 
                 }else {
-                    System.err.println("\nErreur: Ceci n'est pas un nombre !!!");
+                    System.err.println("\nErreur : vous n'avez pas tapé de nombre.");
                 }
             }
         }
@@ -304,11 +306,11 @@ public class Salika {
                             break;
                         }
                     }else {
-                        System.err.println("\nErreur: Le nombre choisi ne correspond à aucun choix proposé !!!");
+                        System.err.println("\nErreur : le nombre choisi ne correspond à aucun choix proposé.");
                     }
 
                 }else {
-                    System.err.println("\nErreur: Ceci n'est pas un nombre !!!");
+                    System.err.println("\nErreur : vous n'avez pas tapé de nombre.");
                 }
             }
         }
@@ -344,11 +346,11 @@ public class Salika {
                             break;
                         }
                     }else {
-                        System.err.println("\nErreur: Le nombre choisi ne correspond à aucun choix proposé !!!");
+                        System.err.println("\nErreur : le nombre choisi ne correspond à aucun choix proposé.");
                     }
 
                 }else {
-                    System.err.println("\nErreur: Ceci n'est pas un nombre !!!");
+                    System.err.println("\nErreur : vous n'avez pas tapé de nombre.");
                 }
             }
         }
@@ -384,17 +386,15 @@ public class Salika {
                             break;
                         }
                     }else {
-                        System.err.println("\nErreur: Le nombre choisi ne correspond à aucun choix proposé !!!");
+                        System.err.println("\nErreur : le nombre choisi ne correspond à aucun choix proposé.");
                     }
 
                 }else {
-                    System.err.println("\nErreur: Ceci n'est pas un nombre !!!");
+                    System.err.println("\nErreur : vous n'avez pas tapé de nombre.");
                 }
             }
         }
     }
-
-
 
     public static void choiceFilm(Connection connection) throws SQLException{
         System.out.println("\n1. Créer un nouveau film\n2. Afficher les films\n3. Mettre à jour un film\n4. Supprimer un film\n5. Retour");
@@ -426,17 +426,17 @@ public class Salika {
                         valide = true;
                     }
                 }else {
-                    System.err.println("Erreur: Le nombre choisi ne correspond à aucun choix proposé !!!");
+                    System.err.println("Erreur : le nombre choisi ne correspond à aucun choix proposé.");
                 }
 
             }else {
-                System.err.println("Erreur: Ceci n'est pas un nombre !!!");
+                System.err.println("Erreur : vous n'avez pas tapé de nombre.");
             }
         }
     }
 
     public static void choiceFilmActor(Connection connection) throws SQLException{
-        System.out.println("\n1. Créer un nouveau film actor\n2. Afficher les films actors\n3. Mettre à jour un film actor\n4. Supprimer un film actor\n5. Retour");
+        System.out.println("\n1. Créer un nouvelle liaison entre les films et les acteurs\n2. Afficher les liaisons\n3. Mettre à jour une liaison\n4. Supprimer une liaison\n5. Retour");
         System.out.println("Entrez votre choix :");
         Scanner choice = new Scanner(System.in);
 
@@ -447,36 +447,36 @@ public class Salika {
                 if(choix <= 5 || choix >= 1){
                     if(choix == 1){
                         Add.addFilmActor(connection);
-                        System.out.println("\n1. Créer un nouveau film actor\n2. Afficher les films actors\n3. Mettre à jour un film actor\n4. Supprimer un film actor\n5. Retour");
+                        System.out.println("\n1. Créer un nouvelle liaison entre les films et les acteurs\n2. Afficher les liaisons\n3. Mettre à jour une liaison\n4. Supprimer une liaison\n5. Retour");
 
                     }else if(choix == 2){
                         Affiche.afficheFilmActor(connection);
-                        System.out.println("\n1. Créer un nouveau film actor\n2. Afficher les films actors\n3. Mettre à jour un film actor\n4. Supprimer un film actor\n5. Retour");
+                        System.out.println("\n1. Créer un nouvelle liaison entre les films et les acteurs\n2. Afficher les liaisons\n3. Mettre à jour une liaison\n4. Supprimer une liaison\n5. Retour");
 
                     }else if(choix == 3){
                         Update.updateFilmActor(connection);
-                        System.out.println("\n1. Créer un nouveau film actor\n2. Afficher les films actors\n3. Mettre à jour un film actor\n4. Supprimer un film actor\n5. Retour");
+                        System.out.println("\n1. Créer un nouvelle liaison entre les films et les acteurs\n2. Afficher les liaisons\n3. Mettre à jour une liaison\n4. Supprimer une liaison\n5. Retour");
 
                     }else if(choix == 4){
                         Delete.removeFilmActor(connection);
-                        System.out.println("\n1. Créer un nouveau film actor\n2. Afficher les films actors\n3. Mettre à jour un film actor\n4. Supprimer un film actor\n5. Retour");
+                        System.out.println("\n1. Créer un nouvelle liaison entre les films et les acteurs\n2. Afficher les liaisons\n3. Mettre à jour une liaison\n4. Supprimer une liaison\n5. Retour");
 
                     }else if(choix == 5){
                         System.out.println("Quitter");
                         valide = true;
                     }
                 }else {
-                    System.err.println("Erreur: Le nombre choisi ne correspond à aucun choix proposé !!!");
+                    System.err.println("Erreur : le nombre choisi ne correspond à aucun choix proposé.");
                 }
 
             }else {
-                System.err.println("Erreur: Ceci n'est pas un nombre !!!");
+                System.err.println("Erreur : vous n'avez pas tapé de nombre.");
             }
         }
     }
 
     public static void choiceFilmCate(Connection connection) throws SQLException{
-        System.out.println("\n1. Créer un nouveau film category\n2. Afficher les films categories\n3. Mettre à jour un film category\n4. Supprimer un film category\n5. Retour");
+        System.out.println("\n1. Créer un nouvelle liaison entre les films et les catégories\n2. Afficher les liaisons\n3. Mettre à jour une liaison\n4. Supprimer une liaison\n5. Retour");
         System.out.println("Entrez votre choix :");
         Scanner choice = new Scanner(System.in);
 
@@ -487,36 +487,36 @@ public class Salika {
                 if(choix <= 5 || choix >= 1){
                     if(choix == 1){
                         Add.addFilmCate(connection);
-                        System.out.println("\n1. Créer un nouveau film category\n2. Afficher les films categories\n3. Mettre à jour un film category\n4. Supprimer un film category\n5. Retour");
+                        System.out.println("\n1. Créer un nouvelle liaison entre les films et les catégories\n2. Afficher les liaisons\n3. Mettre à jour une liaison\n4. Supprimer une liaison\n5. Retour");
 
                     }else if(choix == 2){
                         Affiche.afficheFilmCate(connection);
-                        System.out.println("\n1. Créer un nouveau film category\n2. Afficher les films categories\n3. Mettre à jour un film category\n4. Supprimer un film category\n5. Retour");
+                        System.out.println("\n1. Créer un nouvelle liaison entre les films et les catégories\n2. Afficher les liaisons\n3. Mettre à jour une liaison\n4. Supprimer une liaison\n5. Retour");
 
                     }else if(choix == 3){
                         Update.updateFilmCate(connection);
-                        System.out.println("\n1. Créer un nouveau film category\n2. Afficher les films categories\n3. Mettre à jour un film category\n4. Supprimer un film category\n5. Retour");
+                        System.out.println("\n1. Créer un nouvelle liaison entre les films et les catégories\n2. Afficher les liaisons\n3. Mettre à jour une liaison\n4. Supprimer une liaison\n5. Retour");
 
                     }else if(choix == 4){
                         Delete.removeFilmCate(connection);
-                        System.out.println("\n1. Créer un nouveau film category\n2. Afficher les films categories\n3. Mettre à jour un film category\n4. Supprimer un film category\n5. Retour");
+                        System.out.println("\n1. Créer un nouvelle liaison entre les films et les catégories\n2. Afficher les liaisons\n3. Mettre à jour une liaison\n4. Supprimer une liaison\n5. Retour");
 
                     }else if(choix == 5){
                         System.out.println("Quitter");
                         valide = true;
                     }
                 }else {
-                    System.err.println("Erreur: Le nombre choisi ne correspond à aucun choix proposé !!!");
+                    System.err.println("Erreur : le nombre choisi ne correspond à aucun choix proposé.");
                 }
 
             }else {
-                System.err.println("Erreur: Ceci n'est pas un nombre !!!");
+                System.err.println("Erreur : vous n'avez pas tapé de nombre.");
             }
         }
     }
 
     public static void choiceFilmText(Connection connection) throws SQLException {
-        System.out.println("\n1. Créer un nouveau film text\n2. Afficher les films text\n3. Mettre à jour un film text\n4. Supprimer un film text\n5. Retour");
+        System.out.println("\n1. Créer une nouvelle description du film\n2. Afficher les descriptions\n3. Mettre à jour une description\n4. Supprimer une description\n5. Retour");
         System.out.println("Entrez votre choix :");
         Scanner choice = new Scanner(System.in);
 
@@ -527,36 +527,36 @@ public class Salika {
                 if (choix <= 5 || choix >= 1) {
                     if (choix == 1) {
                         Add.addFilmText(connection);
-                        System.out.println("\n1. Créer un nouveau film text\n2. Afficher les films text\n3. Mettre à jour un film text\n4. Supprimer un film text\n5. Retour");
+                        System.out.println("\n1. Créer une nouvelle description du film\n2. Afficher les descriptions\n3. Mettre à jour une description\n4. Supprimer une description\n5. Retour");
 
                     } else if (choix == 2) {
                         Affiche.afficheFilmText(connection);
-                        System.out.println("\n1. Créer un nouveau film text\n2. Afficher les films text\n3. Mettre à jour un film text\n4. Supprimer un film text\n5. Retour");
+                        System.out.println("\n1. Créer une nouvelle description du film\n2. Afficher les descriptions\n3. Mettre à jour une description\n4. Supprimer une description\n5. Retour");
 
                     } else if (choix == 3) {
                         Update.updateFilmText(connection);
-                        System.out.println("\n1. Créer un nouveau film text\n2. Afficher les films text\n3. Mettre à jour un film text\n4. Supprimer un film text\n5. Retour");
+                        System.out.println("\n1. Créer une nouvelle description du film\n2. Afficher les descriptions\n3. Mettre à jour une description\n4. Supprimer une description\n5. Retour");
 
                     } else if (choix == 4) {
                         Delete.removeFilmText(connection);
-                        System.out.println("\n1. Créer un nouveau film text\n2. Afficher les films text\n3. Mettre à jour un film text\n4. Supprimer un film text\n5. Retour");
+                        System.out.println("\n1. Créer une nouvelle description du film\n2. Afficher les descriptions\n3. Mettre à jour une description\n4. Supprimer une description\n5. Retour");
 
                     } else if (choix == 5) {
                         System.out.println("Quitter");
                         valide = true;
                     }
                 } else {
-                    System.err.println("Erreur: Le nombre choisi ne correspond à aucun choix proposé !!!");
+                    System.err.println("Erreur : le nombre choisi ne correspond à aucun choix proposé.");
                 }
 
             } else {
-                System.err.println("Erreur: Ceci n'est pas un nombre !!!");
+                System.err.println("Erreur : vous n'avez pas tapé de nombre.");
             }
         }
     }
 
     public static void choiceInventory(Connection connection) throws SQLException{
-        System.out.println("\n1. Créer un nouveau inventory\n2. Afficher les inventories\n3. Mettre à jour un inventory\n4. Supprimer un inventory\n5. Retour");
+        System.out.println("\n1. Créer un nouvel inventaire\n2. Afficher les inventaires\n3. Mettre à jour un inventaire\n4. Supprimer un inventaire\n5. Retour");
         System.out.println("Entrez votre choix :");
         Scanner choice = new Scanner(System.in);
 
@@ -567,30 +567,30 @@ public class Salika {
                 if(choix <= 5 || choix >= 1){
                     if(choix == 1){
                         Add.addInventory(connection);
-                        System.out.println("\n1. Créer un nouveau inventory\n2. Afficher les inventories\n3. Mettre à jour un inventory\n4. Supprimer un inventory\n5. Retour");
+                        System.out.println("\n1. Créer un nouvel inventaire\n2. Afficher les inventaires\n3. Mettre à jour un inventaire\n4. Supprimer un inventaire\n5. Retour");
 
                     }else if(choix == 2){
                         Affiche.afficheInventory(connection);
-                        System.out.println("\n1. Créer un nouveau inventory\n2. Afficher les inventories\n3. Mettre à jour un inventory\n4. Supprimer un inventory\n5. Retour");
+                        System.out.println("\n1. Créer un nouvel inventaire\n2. Afficher les inventaires\n3. Mettre à jour un inventaire\n4. Supprimer un inventaire\n5. Retour");
 
                     }else if(choix == 3){
                         Update.updateInventory(connection);
-                        System.out.println("\n1. Créer un nouveau inventory\n2. Afficher les inventories\n3. Mettre à jour un inventory\n4. Supprimer un inventory\n5. Retour");
+                        System.out.println("\n1. Créer un nouvel inventaire\n2. Afficher les inventaires\n3. Mettre à jour un inventaire\n4. Supprimer un inventaire\n5. Retour");
 
                     }else if(choix == 4){
                         Delete.removeInventory(connection);
-                        System.out.println("\n1. Créer un nouveau inventory\n2. Afficher les inventories\n3. Mettre à jour un inventory\n4. Supprimer un inventory\n5. Retour");
+                        System.out.println("\n1. Créer un nouvel inventaire\n2. Afficher les inventaires\n3. Mettre à jour un inventaire\n4. Supprimer un inventaire\n5. Retour");
 
                     }else if(choix == 5){
                         System.out.println("Quitter");
                         valide = true;
                     }
                 }else {
-                    System.err.println("Erreur: Le nombre choisi ne correspond à aucun choix proposé !!!");
+                    System.err.println("Erreur : le nombre choisi ne correspond à aucun choix proposé.");
                 }
 
             }else {
-                System.err.println("Erreur: Ceci n'est pas un nombre !!!");
+                System.err.println("Erreur : vous n'avez pas tapé de nombre.");
             }
         }
     }
@@ -626,20 +626,17 @@ public class Salika {
                         valide = true;
                     }
                 }else {
-                    System.err.println("Erreur: Le nombre choisi ne correspond à aucun choix proposé !!!");
+                    System.err.println("Erreur : le nombre choisi ne correspond à aucun choix proposé.");
                 }
 
             }else {
-                System.err.println("Erreur: Ceci n'est pas un nombre !!!");
+                System.err.println("Erreur : vous n'avez pas tapé de nombre.");
             }
         }
     }
 
-
-
-
     public static void choicePayement(Connection connection) throws SQLException{
-        System.out.println("\n1. Créer un nouveau payment\n2. Afficher les payments\n3. Mettre à jour un payment\n4. Supprimer un payment\n5. Retour");
+        System.out.println("\n1. Créer un nouveau paiement\n2. Afficher les paiements\n3. Mettre à jour un paiement\n4. Supprimer un paiement\n5. Retour");
         System.out.println("Entrez votre choix :");
         Scanner choice = new Scanner(System.in);
 
@@ -650,36 +647,36 @@ public class Salika {
                 if(choix <= 5 || choix >= 1){
                     if(choix == 1){
                         Add.addPayment(connection);
-                        System.out.println("\n1. Créer un nouveau payment\n2. Afficher les payments\n3. Mettre à jour un payment\n4. Supprimer un payment\n5. Retour");
+                        System.out.println("\n1. Créer un nouveau paiement\n2. Afficher les paiements\n3. Mettre à jour un paiement\n4. Supprimer un paiement\n5. Retour");
 
                     }else if(choix == 2){
                         Affiche.affichePayment(connection);
-                        System.out.println("\n1. Créer un nouveau payment\n2. Afficher les payments\n3. Mettre à jour un payment\n4. Supprimer un payment\n5. Retour");
+                        System.out.println("\n1. Créer un nouveau paiement\n2. Afficher les paiements\n3. Mettre à jour un paiement\n4. Supprimer un paiement\n5. Retour");
 
                     }else if(choix == 3){
                         Update.updatePayment(connection);
-                        System.out.println("\n1. Créer un nouveau payment\n2. Afficher les payments\n3. Mettre à jour un payment\n4. Supprimer un payment\n5. Retour");
+                        System.out.println("\n1. Créer un nouveau paiement\n2. Afficher les paiements\n3. Mettre à jour un paiement\n4. Supprimer un paiement\n5. Retour");
 
                     }else if(choix == 4){
                         Delete.deletePayment(connection);
-                        System.out.println("\n1. Créer un nouveau payment\n2. Afficher les payments\n3. Mettre à jour un payment\n4. Supprimer un payment\n5. Retour");
+                        System.out.println("\n1. Créer un nouveau paiement\n2. Afficher les paiements\n3. Mettre à jour un paiement\n4. Supprimer un paiement\n5. Retour");
 
                     }else if(choix == 5){
                         System.out.println("Quitter");
                         valide = true;
                     }
                 }else {
-                    System.err.println("Erreur: Le nombre choisi ne correspond à aucun choix proposé !!!");
+                    System.err.println("Erreur : le nombre choisi ne correspond à aucun choix proposé.");
                 }
 
             }else {
-                System.err.println("Erreur: Ceci n'est pas un nombre !!!");
+                System.err.println("Erreur : vous n'avez pas tapé de nombre.");
             }
         }
     }
 
     public static void choiceRental(Connection connection) throws SQLException{
-        System.out.println("\n1. Créer un nouveau rental\n2. Afficher les rentals\n3. Mettre à jour un rental\n4. Supprimer un rental\n5. Retour");
+        System.out.println("\n1. Créer un nouvelle location\n2. Afficher les locations\n3. Mettre à jour une location\n4. Supprimer une location\n5. Retour");
         System.out.println("Entrez votre choix :");
         Scanner choice = new Scanner(System.in);
 
@@ -690,37 +687,36 @@ public class Salika {
                 if(choix <= 5 || choix >= 1){
                     if(choix == 1){
                         Add.addRental(connection);
-                        System.out.println("\n1. Créer un nouveau rental\n2. Afficher les rentals\n3. Mettre à jour un rental\n4. Supprimer un rental\n5. Retour");
+                        System.out.println("\n1. Créer un nouvelle location\n2. Afficher les locations\n3. Mettre à jour une location\n4. Supprimer une location\n5. Retour");
 
                     }else if(choix == 2){
                         Affiche.afficheRental(connection);
-                        System.out.println("\n1. Créer un nouveau rental\n2. Afficher les rentals\n3. Mettre à jour un rental\n4. Supprimer un rental\n5. Retour");
+                        System.out.println("\n1. Créer un nouvelle location\n2. Afficher les locations\n3. Mettre à jour une location\n4. Supprimer une location\n5. Retour");
 
                     }else if(choix == 3){
                         Update.updateRental(connection);
-                        System.out.println("\n1. Créer un nouveau rental\n2. Afficher les rentals\n3. Mettre à jour un rental\n4. Supprimer un rental\n5. Retour");
+                        System.out.println("\n1. Créer un nouvelle location\n2. Afficher les locations\n3. Mettre à jour une location\n4. Supprimer une location\n5. Retour");
 
                     }else if(choix == 4){
                         Delete.deleteRental(connection);
-                        System.out.println("\n1. Créer un nouveau rental\n2. Afficher les rentals\n3. Mettre à jour un rental\n4. Supprimer un rental\n5. Retour");
+                        System.out.println("\n1. Créer un nouvelle location\n2. Afficher les locations\n3. Mettre à jour une location\n4. Supprimer une location\n5. Retour");
 
                     }else if(choix == 5){
                         System.out.println("Quitter");
                         valide = true;
                     }
                 }else {
-                    System.err.println("Erreur: Le nombre choisi ne correspond à aucun choix proposé !!!");
+                    System.err.println("Erreur : le nombre choisi ne correspond à aucun choix proposé.");
                 }
 
             }else {
-                System.err.println("Erreur: Ceci n'est pas un nombre !!!");
+                System.err.println("Erreur : vous n'avez pas tapé de nombre.");
             }
         }
     }
 
-
     public static void choiceStaff(Connection connection) throws SQLException{
-        System.out.println("\n1. Créer un nouveau staff\n2. Afficher les staffs\n3. Mettre à jour un staff\n4. Supprimer un staff\n5. Retour");
+        System.out.println("\n1. Créer un nouveau membre du staff\n2. Afficher les membres\n3. Mettre à jour un membre\n4. Supprimer un membre\n5. Retour");
         System.out.println("Entrez votre choix :");
         Scanner choice = new Scanner(System.in);
 
@@ -731,37 +727,36 @@ public class Salika {
                 if(choix <= 5 || choix >= 1){
                     if(choix == 1){
                         Add.addStaff(connection);
-                        System.out.println("\n1. Créer un nouveau staff\n2. Afficher les staffs\n3. Mettre à jour un staff\n4. Supprimer un staff\n5. Retour");
+                        System.out.println("\n1. Créer un nouveau membre du staff\n2. Afficher les membres\n3. Mettre à jour un membre\n4. Supprimer un membre\n5. Retour");
 
                     }else if(choix == 2){
                         Affiche.afficheStaff(connection);
-                        System.out.println("\n1. Créer un nouveau staff\n2. Afficher les staffs\n3. Mettre à jour un staff\n4. Supprimer un staff\n5. Retour");
+                        System.out.println("\n1. Créer un nouveau membre du staff\n2. Afficher les membres\n3. Mettre à jour un membre\n4. Supprimer un membre\n5. Retour");
 
                     }else if(choix == 3){
                         Update.updateStaff(connection);
-                        System.out.println("\n1. Créer un nouveau staff\n2. Afficher les staffs\n3. Mettre à jour un staff\n4. Supprimer un staff\n5. Retour");
+                        System.out.println("\n1. Créer un nouveau membre du staff\n2. Afficher les membres\n3. Mettre à jour un membre\n4. Supprimer un membre\n5. Retour");
 
                     }else if(choix == 4){
                         Delete.deleteStaff(connection);
-                        System.out.println("\n1. Créer un nouveau staff\n2. Afficher les staffs\n3. Mettre à jour un staff\n4. Supprimer un staff\n5. Retour");
+                        System.out.println("\n1. Créer un nouveau membre du staff\n2. Afficher les membres\n3. Mettre à jour un membre\n4. Supprimer un membre\n5. Retour");
 
                     }else if(choix == 5){
                         System.out.println("Quitter");
                         valide = true;
                     }
                 }else {
-                    System.err.println("Erreur: Le nombre choisi ne correspond à aucun choix proposé !!!");
+                    System.err.println("Erreur : le nombre choisi ne correspond à aucun choix proposé.");
                 }
 
             }else {
-                System.err.println("Erreur: Ceci n'est pas un nombre !!!");
+                System.err.println("Erreur : vous n'avez pas tapé de nombre.");
             }
         }
     }
 
-
     public static void choiceStore(Connection connection) throws SQLException{
-        System.out.println("\n1. Créer un nouveau store\n2. Afficher les stores\n3. Mettre à jour un store\n4. Supprimer un store\n5. Retour");
+        System.out.println("\n1. Créer un nouveau magasin\n2. Afficher les magasins\n3. Mettre à jour un magasin\n4. Supprimer un magasin\n5. Retour");
         System.out.println("Entrez votre choix :");
         Scanner choice = new Scanner(System.in);
 
@@ -772,31 +767,32 @@ public class Salika {
                 if(choix <= 5 || choix >= 1){
                     if(choix == 1){
                         Add.addStore(connection);
-                        System.out.println("\n1. Créer un nouveau store\n2. Afficher les stores\n3. Mettre à jour un store\n4. Supprimer un store\n5. Retour");
+                        System.out.println("\n1. Créer un nouveau magasin\n2. Afficher les magasins\n3. Mettre à jour un magasin\n4. Supprimer un magasin\n5. Retour");
 
                     }else if(choix == 2){
                         Affiche.afficheStore(connection);
-                        System.out.println("\n1. Créer un nouveau store\n2. Afficher les stores\n3. Mettre à jour un store\n4. Supprimer un store\n5. Retour");
+                        System.out.println("\n1. Créer un nouveau magasin\n2. Afficher les magasins\n3. Mettre à jour un magasin\n4. Supprimer un magasin\n5. Retour");
 
                     }else if(choix == 3){
                         Update.updateStore(connection);
-                        System.out.println("\n1. Créer un nouveau store\n2. Afficher les stores\n3. Mettre à jour un store\n4. Supprimer un store\n5. Retour");
+                        System.out.println("\n1. Créer un nouveau magasin\n2. Afficher les magasins\n3. Mettre à jour un magasin\n4. Supprimer un magasin\n5. Retour");
 
                     }else if(choix == 4){
                         Delete.deleteStore(connection);
-                        System.out.println("\n1. Créer un nouveau store\n2. Afficher les stores\n3. Mettre à jour un store\n4. Supprimer un store\n5. Retour");
+                        System.out.println("\n1. Créer un nouveau magasin\n2. Afficher les magasins\n3. Mettre à jour un magasin\n4. Supprimer un magasin\n5. Retour");
 
                     }else if(choix == 5){
                         System.out.println("Quitter");
                         valide = true;
                     }
                 }else {
-                    System.err.println("Erreur: Le nombre choisi ne correspond à aucun choix proposé !!!");
+                    System.err.println("Erreur : le nombre choisi ne correspond à aucun choix proposé.");
                 }
 
             }else {
-                System.err.println("Erreur: Ceci n'est pas un nombre !!!");
+                System.err.println("Erreur : vous n'avez pas tapé de nombre.");
             }
         }
     }
+
 }

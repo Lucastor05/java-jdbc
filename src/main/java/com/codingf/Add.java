@@ -10,7 +10,7 @@ import com.codingf.*;
 public class Add {
 
     public static void addActor(Connection connection) throws SQLException {
-        // utiliser un Scanner pour lire les entrées de l'utilisateur
+        // Utiliser un Scanner pour lire les entrées de l'utilisateur
         Scanner scanner = new Scanner(System.in);
 
         // Variables pour stocker les entrées de l'utilisateur
@@ -23,7 +23,6 @@ public class Add {
         while (!isFirstNameValid) {
             System.out.print("Entrez le prénom de l'acteur : ");
             firstName = scanner.next();
-            // vérifier si le prénom est un nombre
             try {
                 Double.parseDouble(firstName);
                 System.out.println("Vous ne pouvez pas entrer un nombre pour le prénom.");
@@ -35,7 +34,6 @@ public class Add {
         while (!isLastNameValid) {
             System.out.print("Entrez le nom de l'acteur : ");
             lastName = scanner.next();
-            // vérifier si le nom est un nombre
             try {
                 Double.parseDouble(lastName);
                 System.out.println("Vous ne pouvez pas entrer un nombre pour le nom.");
@@ -43,18 +41,18 @@ public class Add {
                 isLastNameValid = true;
             }
         }
-        // créer une requête pour vérifier si l'acteur existe déjà dans la table
+        // Créer une requête pour vérifier si l'acteur existe déjà dans la table
         String sql = "SELECT * FROM actor WHERE first_name = ? AND last_name = ?";
         PreparedStatement statement = connection.prepareStatement(sql);
 
-        // définir les valeurs pour les paramètres de la requête
+        // Définir les valeurs pour les paramètres de la requête
         statement.setString(1, firstName);
         statement.setString(2, lastName);
 
-        // exécuter la requête
+        // Exécuter la requête
         ResultSet resultSet = statement.executeQuery();
 
-        // vérifier si l'acteur existe déjà dans la table
+        // Vérifier si l'acteur existe déjà dans la table
         while (resultSet.next()) {
             isActorExist = true;
             break;
@@ -63,20 +61,21 @@ public class Add {
         if (isActorExist) {
             System.out.println("L'acteur existe déjà dans la base de données.");
         } else {
-            // créer une requête préparée pour insérer les données dans la table
+            // Créer une requête préparée pour insérer les données dans la table
             sql = "INSERT INTO actor (first_name, last_name) VALUES (?, ?)";
             statement = connection.prepareStatement(sql);
 
-            // définir les valeurs pour les paramètres de la requête
+            // Définir les valeurs pour les paramètres de la requête
             statement.setString(1, firstName);
             statement.setString(2, lastName);
 
-            // exécuter la requête
+            // Exécuter la requête
             statement.executeUpdate();
         }
     }
+
     public static void addAddress(Connection connection) throws SQLException {
-        // utiliser un Scanner pour lire les entrées de l'utilisateur
+        // Utiliser un Scanner pour lire les entrées de l'utilisateur
         Scanner scanner = new Scanner(System.in);
 
         // Variables pour stocker les entrées de l'utilisateur
@@ -88,43 +87,43 @@ public class Add {
         String phone = "";
         String location = "";
 
-        System.out.print("Entrez l'adresse: ");
+        System.out.print("Entrez l'adresse : ");
         address = scanner.nextLine();
 
-        System.out.print("Entrez l'adresse 2 (facultatif): ");
+        System.out.print("Entrez la suite de l'adresse (facultatif) : ");
         address2 = scanner.nextLine();
 
-        System.out.print("Entrez le district: ");
+        System.out.print("Entrez le district : ");
         district = scanner.nextLine();
 
-        System.out.print("Entrez l'ID de la ville: ");
+        System.out.print("Entrez l'id de la ville : ");
         cityID = scanner.nextInt();
         scanner.nextLine();
 
-        System.out.print("Entrez le code postal (facultatif): ");
+        System.out.print("Entrez le code postal (facultatif) : ");
         postalCode = scanner.nextLine();
 
-        System.out.print("Entrez le numéro de téléphone: ");
+        System.out.print("Entrez le numéro de téléphone : ");
         phone = scanner.nextLine();
 
         boolean isLocationValid = false;
         while (!isLocationValid) {
-            System.out.print("Entrez la localisation, exemple : POINT(12.34 56.78): ");
+            System.out.print("Entrez la localisation (exemple : POINT(12.34 56.78)) : ");
             location = scanner.nextLine();
-            // vérifier si le format de la localisation est valide
+            // Vérifier si le format de la localisation est valide
             if (!location.matches("^POINT\\(-?\\d+\\.\\d+ -?\\d+\\.\\d+\\)$")) {
-                System.out.println("Format de localisation non valide. Veuillez entrer une localisation valide au format POINT(x y) où x et y sont des coordonnées géographiques.");
+                System.out.println("Le format de le localisation est non valide. Veuillez entrer une localisation valide au format POINT(x y) où x et y sont des coordonnées géographiques.");
             } else {
                 isLocationValid = true;
             }
         }
 
 
-        // créer une requête préparée pour insérer les données dans la table
+        // Créer une requête préparée pour insérer les données dans la table
         String sql = "INSERT INTO address (address, address2, district, city_id, postal_code, phone, location) VALUES (?, ?, ?, ?, ?, ?, ST_GeomFromText(?))";
         PreparedStatement statement = connection.prepareStatement(sql);
 
-        // définir les valeurs pour les paramètres de la requête
+        // Définir les valeurs pour les paramètres de la requête
         statement.setString(1, address);
         statement.setString(2, address2);
         statement.setString(3, district);
@@ -134,13 +133,14 @@ public class Add {
         statement.setString(7, location);
 
 
-        // exécuter la requête
+        // Exécuter la requête
         statement.executeUpdate();
         System.out.println("L'adresse a été insérée avec succès.");
 
     }
+
     public static void addCategory(Connection connection) throws SQLException {
-        // utiliser un Scanner pour lire les entrées de l'utilisateur
+        // Utiliser un Scanner pour lire les entrées de l'utilisateur
         Scanner scanner = new Scanner(System.in);
 
         // Variables pour stocker les entrées de l'utilisateur
@@ -172,7 +172,7 @@ public class Add {
         }
     }
     public static void addCity(Connection connection) throws SQLException {
-        // utiliser un Scanner pour lire les entrées de l'utilisateur
+        // Utiliser un Scanner pour lire les entrées de l'utilisateur
         Scanner scanner = new Scanner(System.in);
 
         // Variables pour stocker les entrées de l'utilisateur
