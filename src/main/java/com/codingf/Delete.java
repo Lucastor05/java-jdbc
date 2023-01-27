@@ -244,8 +244,403 @@ public class Delete {
         }
     }
 
+    public static void removeFilm(Connection connection) throws SQLException {
+        Affiche.afficheFilm(connection);
+
+        boolean newRemoveFilm = false;
+        while(!newRemoveFilm) {
+            ResultSet result;
+            PreparedStatement statement;
+
+            //demande a l'utilisateur quel film il veut supprimer
+            System.out.println("quel film id voulez vous supprimer ?");
+            Scanner removeFilmId = new Scanner(System.in);
+            int film_id = removeFilmId.nextInt();
+
+            //verifie si le film existe
+            String sql = "SELECT * FROM film WHERE film_id = ?";
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, Integer.toString(film_id));
+            result = statement.executeQuery();
 
 
+            if (!result.next()) {
+                System.err.println("le film existe pas :P");
+                newRemoveFilm = true;
 
+            } else {
+
+                //si le film existe alors on le supprime
+                sql = "DELETE FROM film WHERE film_id = ?";
+                statement = connection.prepareStatement(sql);
+
+                statement.setString(1, Integer.toString(film_id));
+
+                statement.executeUpdate();
+
+                System.out.println("film a ete supprimer");
+                newRemoveFilm = true;
+            }
+        }
+    }
+
+    public static void removeFilmActor(Connection connection) throws SQLException{
+        Affiche.afficheFilmActor(connection);
+
+        boolean newRemoveFilm = false;
+        while(!newRemoveFilm) {
+            ResultSet result;
+            PreparedStatement statement;
+
+            //demande l'id dans actor
+            System.out.println("quel actor id voulez vous supprimer ?");
+            Scanner removeIdActor = new Scanner(System.in);
+            int actor_id = removeIdActor.nextInt();
+
+            //demande l'id d'en film
+            System.out.println("quel film id voulez vous supprimer ?");
+            Scanner removeIdfilm = new Scanner(System.in);
+            int film_id = removeIdfilm.nextInt();
+
+            //check si le film et actor existe
+            String sql = "SELECT * FROM film_actor WHERE actor_id = ? AND film_id = ?";
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, Integer.toString(actor_id));
+            statement.setString(2, Integer.toString(film_id));
+            result = statement.executeQuery();
+
+
+            if (!result.next()) {
+                System.err.println("le film actor existe pas :P");
+                newRemoveFilm = true;
+
+            } else {
+
+                //si le film et actor existe alors on supprime
+                sql = "DELETE FROM film_actor WHERE actor_id = ? AND film_id = ?";
+                statement = connection.prepareStatement(sql);
+
+                statement.setString(1, Integer.toString(actor_id));
+                statement.setString(2, Integer.toString(film_id));
+                statement.executeUpdate();
+
+                System.out.println("film actor a ete supprimer");
+                newRemoveFilm = true;
+            }
+        }
+    }
+
+    public static void removeFilmCate(Connection connection) throws SQLException{
+        Affiche.afficheFilmCate(connection);
+
+        boolean newRemoveFilm = false;
+        while(!newRemoveFilm) {
+            ResultSet result;
+            PreparedStatement statement;
+
+            //demande l'id du film
+            System.out.println("quel film id voulez vous supprimer ?");
+            Scanner removeFilmId = new Scanner(System.in);
+            int film_id = removeFilmId.nextInt();
+
+            //demande l'id du category
+            System.out.println("quel category id voulez vous supprimer ?");
+            Scanner removeCateId = new Scanner(System.in);
+            int cate_id = removeCateId.nextInt();
+
+            //check si il existe
+            String sql = "SELECT * FROM film_category WHERE category_id = ? AND film_id = ?";
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, Integer.toString(cate_id));
+            statement.setString(2, Integer.toString(film_id));
+            result = statement.executeQuery();
+
+
+            if (!result.next()) {
+                System.err.println("le film category existe pas :P");
+                newRemoveFilm = true;
+
+            } else {
+
+                //si il existe alors on supprime
+                sql = "DELETE FROM film_category WHERE category_id = ? AND film_id = ?";
+                statement = connection.prepareStatement(sql);
+
+                statement.setString(1, Integer.toString(cate_id));
+                statement.setString(2, Integer.toString(film_id));
+                statement.executeUpdate();
+
+                System.out.println("film category a ete supprimer");
+                newRemoveFilm = true;
+            }
+        }
+    }
+
+    public static void removeFilmText(Connection connection) throws SQLException{
+        Affiche.afficheFilmText(connection);
+
+        boolean newRemoveFilm = false;
+        while(!newRemoveFilm) {
+            ResultSet result;
+            PreparedStatement statement;
+
+            //demande l'id du film
+            System.out.println("quel film id voulez vous supprimer ?");
+            Scanner removeFilmId = new Scanner(System.in);
+            int film_id = removeFilmId.nextInt();
+
+            //check si il existe
+            String sql = "SELECT * FROM film_text WHERE film_id = ?";
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, Integer.toString(film_id));
+            result = statement.executeQuery();
+
+
+            if (!result.next()) {
+                System.err.println("le film text existe pas :P");
+                newRemoveFilm = true;
+
+            } else {
+
+                //si il existe alors on supprime
+                sql = "DELETE FROM film_text WHERE film_id = ?";
+                statement = connection.prepareStatement(sql);
+
+                statement.setString(1, Integer.toString(film_id));
+                statement.executeUpdate();
+
+                System.out.println("film text a ete supprimer");
+                newRemoveFilm = true;
+            }
+        }
+    }
+
+    public static void removeInventory(Connection connection) throws SQLException{
+        Affiche.afficheInventory(connection);
+
+        boolean newRemoveFilm = false;
+        while(!newRemoveFilm) {
+            ResultSet result;
+            PreparedStatement statement;
+
+            //demande l'id du inventory
+            System.out.println("quel inventory id voulez vous supprimer ?");
+            Scanner removeInvId = new Scanner(System.in);
+            int inventory_id = removeInvId.nextInt();
+
+            String sql = "SELECT * FROM inventory WHERE inventory_id = ?";
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, Integer.toString(inventory_id));
+            result = statement.executeQuery();
+
+
+            if (!result.next()) {
+                System.err.println("le film text existe pas :P");
+                newRemoveFilm = true;
+
+            } else {
+
+                //si il existe alors on suppprime
+                sql = "DELETE FROM inventory WHERE inventory_id = ?";
+                statement = connection.prepareStatement(sql);
+
+                statement.setString(1, Integer.toString(inventory_id));
+                statement.executeUpdate();
+
+                System.out.println("inventory a ete supprimer");
+                newRemoveFilm = true;
+            }
+        }
+    }
+
+    public static void removeLanguage(Connection connection) throws SQLException{
+        Affiche.afficheLanguage(connection);
+
+        boolean newRemoveFilm = false;
+        while(!newRemoveFilm) {
+            ResultSet result;
+            PreparedStatement statement;
+
+            //demande l'id de language
+            System.out.println("quel language id voulez vous supprimer ?");
+            Scanner removeLangId = new Scanner(System.in);
+            int language_id = removeLangId.nextInt();
+
+            //check si il existe
+            String sql = "SELECT * FROM language WHERE language_id = ?";
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, Integer.toString(language_id));
+            result = statement.executeQuery();
+
+
+            if (!result.next()) {
+                System.err.println("le language existe pas :P");
+                newRemoveFilm = true;
+
+            } else {
+
+                //si il existe alors on supprime
+                sql = "DELETE FROM language WHERE language_id = ?";
+                statement = connection.prepareStatement(sql);
+
+                statement.setString(1, Integer.toString(language_id));
+                statement.executeUpdate();
+
+                System.out.println("language a ete supprimer");
+                newRemoveFilm = true;
+            }
+        }
+    }
+
+    public static void deletePayment(Connection connection) throws SQLException {
+        // Initialiser un booléens pour la boucle while
+        boolean newPaymentValide = false;
+        while(!newPaymentValide) {
+            Affiche.affichePayment(connection);
+            System.out.print("Entrez l'id du paiement que vous souhaitez supprimer : ");
+            Scanner newPayment = new Scanner(System.in);
+
+            // Vérifier si l'id existe dans la table
+            if (newPayment.hasNextInt()) {
+                String name = newPayment.next();
+                String query = "SELECT * FROM payment WHERE payment_id = ?";
+                PreparedStatement statement = connection.prepareStatement(query);
+                statement.setString(1, name);
+                ResultSet resultSet = statement.executeQuery();
+
+                // Supprimer s'il n'y a pas d'erreurs
+                if (!resultSet.next()) {
+                    System.err.println("\nErreur: l'id de ce paiement n'existe pas.");
+                } else {
+                    query = "DELETE FROM payment WHERE payment_id = ?";
+                    statement = connection.prepareStatement(query);
+                    statement.setString(1, name);
+
+                    int result = statement.executeUpdate();
+
+                    if (result == 1) {
+                        System.out.println("\nLes informations de l'id entré ont été supprimées avec succès dans la table payment.");
+                    } else {
+                        System.out.println("\nErreur lors de la suppression des informations dans la table payment.");
+                    }
+
+                    newPaymentValide = true;
+                }
+            }else{
+                System.err.println("\nErreur: ceci n'est pas un nombre.");
+            }
+        }
+    }
+
+    public static void deleteRental(Connection connection) throws SQLException {
+        boolean newRentalValide = false;
+        while(!newRentalValide) {
+            Affiche.afficheRental(connection);
+            System.out.print("Entrez l'id de la location que vous souhaitez supprimer : ");
+            Scanner newRental = new Scanner(System.in);
+
+            if (newRental.hasNextInt()) {
+                String name = newRental.next();
+                String query = "SELECT * FROM rental WHERE rental_id = ?";
+                PreparedStatement statement = connection.prepareStatement(query);
+                statement.setString(1, name);
+                ResultSet resultSet = statement.executeQuery();
+
+                if (!resultSet.next()) {
+                    System.err.println("\nErreur: l'id de cette location n'existe pas.");
+                } else {
+                    query = "DELETE FROM rental WHERE rental_id = ?";
+                    statement = connection.prepareStatement(query);
+                    statement.setString(1, name);
+
+                    int result = statement.executeUpdate();
+
+                    if (result == 1) {
+                        System.out.println("\nLes informations de l'id entré ont été supprimées avec succès dans la table rental.");
+                    } else {
+                        System.out.println("\nErreur lors de la suppression des informations dans la table rental.");
+                    }
+
+                    newRentalValide = true;
+                }
+            }else{
+                System.err.println("\nErreur: ceci n'est pas un nombre.");
+            }
+        }
+    }
+
+    public static void deleteStaff(Connection connection) throws SQLException {
+        boolean newStaffValide = false;
+        while(!newStaffValide) {
+            Affiche.afficheStaff(connection);
+            System.out.print("Entrez l'id de la personne dans l'équipe que vous souhaitez supprimer : ");
+            Scanner newStaff = new Scanner(System.in);
+
+            if (newStaff.hasNextInt()) {
+                String name = newStaff.next();
+                String query = "SELECT * FROM staff WHERE staff_id = ?";
+                PreparedStatement statement = connection.prepareStatement(query);
+                statement.setString(1, name);
+                ResultSet resultSet = statement.executeQuery();
+
+                if (!resultSet.next()) {
+                    System.err.println("\nErreur: l'id de cette personne de l'équipe n'existe pas.");
+                } else {
+                    query = "DELETE FROM staff WHERE staff_id = ?";
+                    statement = connection.prepareStatement(query);
+                    statement.setString(1, name);
+
+                    int result = statement.executeUpdate();
+
+                    if (result == 1) {
+                        System.out.println("\nLes informations de l'id entré ont été supprimées avec succès dans la table staff.");
+                    } else {
+                        System.out.println("\nErreur lors de la suppression des informations dans la table staff.");
+                    }
+
+                    newStaffValide = true;
+                }
+            }else{
+                System.err.println("\nErreur: ceci n'est pas un nombre.");
+            }
+        }
+    }
+
+    public static void deleteStore(Connection connection) throws SQLException {
+        boolean newStoreValide = false;
+        while(!newStoreValide) {
+            Affiche.afficheStore(connection);
+            System.out.print("Entrez l'id du magasin que vous souhaitez supprimer : ");
+            Scanner newStore = new Scanner(System.in);
+
+            if (newStore.hasNextInt()) {
+                String name = newStore.next();
+                String query = "SELECT * FROM store WHERE store_id = ?";
+                PreparedStatement statement = connection.prepareStatement(query);
+                statement.setString(1, name);
+                ResultSet resultSet = statement.executeQuery();
+
+                if (!resultSet.next()) {
+                    System.err.println("\nErreur: l'id de ce magasin n'existe pas.");
+                } else {
+                    query = "DELETE FROM store WHERE store_id = ?";
+                    statement = connection.prepareStatement(query);
+                    statement.setString(1, name);
+
+                    int result = statement.executeUpdate();
+
+                    if (result == 1) {
+                        System.out.println("\nLes informations de l'id entré ont été supprimées avec succès dans la table store.");
+                    } else {
+                        System.out.println("\nErreur lors de la suppression des informations dans la table store.");
+                    }
+
+                    newStoreValide = true;
+                }
+            }else{
+                System.err.println("\nErreur: ceci n'est pas un nombre.");
+            }
+        }
+    }
 
 }

@@ -81,6 +81,67 @@ public class Salika {
                         }else if (choix == 8) {
                             Affiche.afficheCustomerList(connection);
                             valide = true;
+
+                        }else if (choix == 9) {
+                            choiceFilm(connection);
+                            valide = true;
+
+                        }else if (choix == 10) {
+                            choiceFilmActor(connection);
+                            valide = true;
+
+                        }else if (choix == 11) {
+                            choiceFilmCate(connection);
+                            valide = true;
+
+                        }else if (choix == 12) {
+                            Affiche.afficheFilmList(connection);
+                            valide = true;
+
+                        }else if (choix == 13) {
+                            choiceFilmText(connection);
+                            valide = true;
+
+                        }else if (choix == 14) {
+                            choiceInventory(connection);
+                            valide = true;
+
+                        }else if (choix == 15) {
+                            choiceLanguage(connection);
+                            valide = true;
+
+                        }else if (choix == 16) {
+                            Affiche.afficheNicerFilm(connection);
+                            valide = true;
+
+                        }else if (choix == 17) {
+                            choicePayement(connection);
+                            valide = true;
+
+                        }else if (choix == 18) {
+                            choiceRental(connection);
+                            valide = true;
+
+                        }else if (choix == 19) {
+                            Affiche.afficheSalesCategory(connection);
+                            valide = true;
+
+                        }else if (choix == 20) {
+                            Affiche.afficheSalesStore(connection);
+                            valide = true;
+
+                        }else if (choix == 21) {
+                            choiceStaff(connection);
+                            valide = true;
+
+                        }else if (choix == 22) {
+                            Affiche.afficheStaffList(connection);
+                            valide = true;
+
+                        }else if (choix == 23) {
+                            choiceStore(connection);
+                            valide = true;
+
                         }else if(choix == 24){
                             System.exit(-1);
                         }
@@ -335,5 +396,407 @@ public class Salika {
 
 
 
+    public static void choiceFilm(Connection connection) throws SQLException{
+        System.out.println("\n1. Créer un nouveau film\n2. Afficher les films\n3. Mettre à jour un film\n4. Supprimer un film\n5. Retour");
+        System.out.println("Entrez votre choix :");
+        Scanner choice = new Scanner(System.in);
 
+        boolean valide = false;
+        while(!valide) {
+            if (choice.hasNextInt()){
+                int choix = choice.nextInt();
+                if(choix <= 5 || choix >= 1){
+                    if(choix == 1){
+                        Add.addFilm(connection);
+                        System.out.println("\n1. Créer un nouveau film\n2. Afficher les films\n3. Mettre à jour un film\n4. Supprimer un film\n5. Retour");
+
+                    }else if(choix == 2){
+                        Affiche.afficheFilm(connection);
+                        System.out.println("\n1. Créer un nouveau film\n2. Afficher les films\n3. Mettre à jour un film\n4. Supprimer un film\n5. Retour");
+
+                    }else if(choix == 3){
+                        Update.updateFilm(connection);
+                        System.out.println("\n1. Créer un nouveau film\n2. Afficher les films\n3. Mettre à jour un film\n4. Supprimer un film\n5. Retour");
+
+                    }else if(choix == 4){
+                        Delete.removeFilm(connection);
+                        System.out.println("\n1. Créer un nouveau film\n2. Afficher les films\n3. Mettre à jour un film\n4. Supprimer un film\n5. Retour");
+
+                    }else if(choix == 5){
+                        valide = true;
+                    }
+                }else {
+                    System.err.println("Erreur: Le nombre choisi ne correspond à aucun choix proposé !!!");
+                }
+
+            }else {
+                System.err.println("Erreur: Ceci n'est pas un nombre !!!");
+            }
+        }
+    }
+
+    public static void choiceFilmActor(Connection connection) throws SQLException{
+        System.out.println("\n1. Créer un nouveau film actor\n2. Afficher les films actors\n3. Mettre à jour un film actor\n4. Supprimer un film actor\n5. Retour");
+        System.out.println("Entrez votre choix :");
+        Scanner choice = new Scanner(System.in);
+
+        boolean valide = false;
+        while(!valide) {
+            if (choice.hasNextInt()){
+                int choix = choice.nextInt();
+                if(choix <= 5 || choix >= 1){
+                    if(choix == 1){
+                        Add.addFilmActor(connection);
+                        System.out.println("\n1. Créer un nouveau film actor\n2. Afficher les films actors\n3. Mettre à jour un film actor\n4. Supprimer un film actor\n5. Retour");
+
+                    }else if(choix == 2){
+                        Affiche.afficheFilmActor(connection);
+                        System.out.println("\n1. Créer un nouveau film actor\n2. Afficher les films actors\n3. Mettre à jour un film actor\n4. Supprimer un film actor\n5. Retour");
+
+                    }else if(choix == 3){
+                        Update.updateFilmActor(connection);
+                        System.out.println("\n1. Créer un nouveau film actor\n2. Afficher les films actors\n3. Mettre à jour un film actor\n4. Supprimer un film actor\n5. Retour");
+
+                    }else if(choix == 4){
+                        Delete.removeFilmActor(connection);
+                        System.out.println("\n1. Créer un nouveau film actor\n2. Afficher les films actors\n3. Mettre à jour un film actor\n4. Supprimer un film actor\n5. Retour");
+
+                    }else if(choix == 5){
+                        System.out.println("Quitter");
+                        valide = true;
+                    }
+                }else {
+                    System.err.println("Erreur: Le nombre choisi ne correspond à aucun choix proposé !!!");
+                }
+
+            }else {
+                System.err.println("Erreur: Ceci n'est pas un nombre !!!");
+            }
+        }
+    }
+
+    public static void choiceFilmCate(Connection connection) throws SQLException{
+        System.out.println("\n1. Créer un nouveau film category\n2. Afficher les films categories\n3. Mettre à jour un film category\n4. Supprimer un film category\n5. Retour");
+        System.out.println("Entrez votre choix :");
+        Scanner choice = new Scanner(System.in);
+
+        boolean valide = false;
+        while(!valide) {
+            if (choice.hasNextInt()){
+                int choix = choice.nextInt();
+                if(choix <= 5 || choix >= 1){
+                    if(choix == 1){
+                        Add.addFilmCate(connection);
+                        System.out.println("\n1. Créer un nouveau film category\n2. Afficher les films categories\n3. Mettre à jour un film category\n4. Supprimer un film category\n5. Retour");
+
+                    }else if(choix == 2){
+                        Affiche.afficheFilmCate(connection);
+                        System.out.println("\n1. Créer un nouveau film category\n2. Afficher les films categories\n3. Mettre à jour un film category\n4. Supprimer un film category\n5. Retour");
+
+                    }else if(choix == 3){
+                        Update.updateFilmCate(connection);
+                        System.out.println("\n1. Créer un nouveau film category\n2. Afficher les films categories\n3. Mettre à jour un film category\n4. Supprimer un film category\n5. Retour");
+
+                    }else if(choix == 4){
+                        Delete.removeFilmCate(connection);
+                        System.out.println("\n1. Créer un nouveau film category\n2. Afficher les films categories\n3. Mettre à jour un film category\n4. Supprimer un film category\n5. Retour");
+
+                    }else if(choix == 5){
+                        System.out.println("Quitter");
+                        valide = true;
+                    }
+                }else {
+                    System.err.println("Erreur: Le nombre choisi ne correspond à aucun choix proposé !!!");
+                }
+
+            }else {
+                System.err.println("Erreur: Ceci n'est pas un nombre !!!");
+            }
+        }
+    }
+
+    public static void choiceFilmText(Connection connection) throws SQLException {
+        System.out.println("\n1. Créer un nouveau film text\n2. Afficher les films text\n3. Mettre à jour un film text\n4. Supprimer un film text\n5. Retour");
+        System.out.println("Entrez votre choix :");
+        Scanner choice = new Scanner(System.in);
+
+        boolean valide = false;
+        while (!valide) {
+            if (choice.hasNextInt()) {
+                int choix = choice.nextInt();
+                if (choix <= 5 || choix >= 1) {
+                    if (choix == 1) {
+                        Add.addFilmText(connection);
+                        System.out.println("\n1. Créer un nouveau film text\n2. Afficher les films text\n3. Mettre à jour un film text\n4. Supprimer un film text\n5. Retour");
+
+                    } else if (choix == 2) {
+                        Affiche.afficheFilmText(connection);
+                        System.out.println("\n1. Créer un nouveau film text\n2. Afficher les films text\n3. Mettre à jour un film text\n4. Supprimer un film text\n5. Retour");
+
+                    } else if (choix == 3) {
+                        Update.updateFilmText(connection);
+                        System.out.println("\n1. Créer un nouveau film text\n2. Afficher les films text\n3. Mettre à jour un film text\n4. Supprimer un film text\n5. Retour");
+
+                    } else if (choix == 4) {
+                        Delete.removeFilmText(connection);
+                        System.out.println("\n1. Créer un nouveau film text\n2. Afficher les films text\n3. Mettre à jour un film text\n4. Supprimer un film text\n5. Retour");
+
+                    } else if (choix == 5) {
+                        System.out.println("Quitter");
+                        valide = true;
+                    }
+                } else {
+                    System.err.println("Erreur: Le nombre choisi ne correspond à aucun choix proposé !!!");
+                }
+
+            } else {
+                System.err.println("Erreur: Ceci n'est pas un nombre !!!");
+            }
+        }
+    }
+
+    public static void choiceInventory(Connection connection) throws SQLException{
+        System.out.println("\n1. Créer un nouveau inventory\n2. Afficher les inventories\n3. Mettre à jour un inventory\n4. Supprimer un inventory\n5. Retour");
+        System.out.println("Entrez votre choix :");
+        Scanner choice = new Scanner(System.in);
+
+        boolean valide = false;
+        while(!valide) {
+            if (choice.hasNextInt()){
+                int choix = choice.nextInt();
+                if(choix <= 5 || choix >= 1){
+                    if(choix == 1){
+                        Add.addInventory(connection);
+                        System.out.println("\n1. Créer un nouveau inventory\n2. Afficher les inventories\n3. Mettre à jour un inventory\n4. Supprimer un inventory\n5. Retour");
+
+                    }else if(choix == 2){
+                        Affiche.afficheInventory(connection);
+                        System.out.println("\n1. Créer un nouveau inventory\n2. Afficher les inventories\n3. Mettre à jour un inventory\n4. Supprimer un inventory\n5. Retour");
+
+                    }else if(choix == 3){
+                        Update.updateInventory(connection);
+                        System.out.println("\n1. Créer un nouveau inventory\n2. Afficher les inventories\n3. Mettre à jour un inventory\n4. Supprimer un inventory\n5. Retour");
+
+                    }else if(choix == 4){
+                        Delete.removeInventory(connection);
+                        System.out.println("\n1. Créer un nouveau inventory\n2. Afficher les inventories\n3. Mettre à jour un inventory\n4. Supprimer un inventory\n5. Retour");
+
+                    }else if(choix == 5){
+                        System.out.println("Quitter");
+                        valide = true;
+                    }
+                }else {
+                    System.err.println("Erreur: Le nombre choisi ne correspond à aucun choix proposé !!!");
+                }
+
+            }else {
+                System.err.println("Erreur: Ceci n'est pas un nombre !!!");
+            }
+        }
+    }
+
+    public static void choiceLanguage(Connection connection) throws SQLException{
+        System.out.println("\n1. Créer un nouveau language\n2. Afficher les languages\n3. Mettre à jour un language\n4. Supprimer un language\n5. Retour");
+        System.out.println("Entrez votre choix :");
+        Scanner choice = new Scanner(System.in);
+
+        boolean valide = false;
+        while(!valide) {
+            if (choice.hasNextInt()){
+                int choix = choice.nextInt();
+                if(choix <= 5 || choix >= 1){
+                    if(choix == 1){
+                        Add.addLanguage(connection);
+                        System.out.println("\n1. Créer un nouveau language\n2. Afficher les languages\n3. Mettre à jour un language\n4. Supprimer un language\n5. Retour");
+
+                    }else if(choix == 2){
+                        Affiche.afficheLanguage(connection);
+                        System.out.println("\n1. Créer un nouveau language\n2. Afficher les languages\n3. Mettre à jour un language\n4. Supprimer un language\n5. Retour");
+
+                    }else if(choix == 3){
+                        Update.updateLanguage(connection);
+                        System.out.println("\n1. Créer un nouveau language\n2. Afficher les languages\n3. Mettre à jour un language\n4. Supprimer un language\n5. Retour");
+
+                    }else if(choix == 4){
+                        Delete.removeLanguage(connection);
+                        System.out.println("\n1. Créer un nouveau language\n2. Afficher les languages\n3. Mettre à jour un language\n4. Supprimer un language\n5. Retour");
+
+                    }else if(choix == 5){
+                        System.out.println("Quitter");
+                        valide = true;
+                    }
+                }else {
+                    System.err.println("Erreur: Le nombre choisi ne correspond à aucun choix proposé !!!");
+                }
+
+            }else {
+                System.err.println("Erreur: Ceci n'est pas un nombre !!!");
+            }
+        }
+    }
+
+
+
+
+    public static void choicePayement(Connection connection) throws SQLException{
+        System.out.println("\n1. Créer un nouveau payment\n2. Afficher les payments\n3. Mettre à jour un payment\n4. Supprimer un payment\n5. Retour");
+        System.out.println("Entrez votre choix :");
+        Scanner choice = new Scanner(System.in);
+
+        boolean valide = false;
+        while(!valide) {
+            if (choice.hasNextInt()){
+                int choix = choice.nextInt();
+                if(choix <= 5 || choix >= 1){
+                    if(choix == 1){
+                        Add.addPayment(connection);
+                        System.out.println("\n1. Créer un nouveau payment\n2. Afficher les payments\n3. Mettre à jour un payment\n4. Supprimer un payment\n5. Retour");
+
+                    }else if(choix == 2){
+                        Affiche.affichePayment(connection);
+                        System.out.println("\n1. Créer un nouveau payment\n2. Afficher les payments\n3. Mettre à jour un payment\n4. Supprimer un payment\n5. Retour");
+
+                    }else if(choix == 3){
+                        Update.updatePayment(connection);
+                        System.out.println("\n1. Créer un nouveau payment\n2. Afficher les payments\n3. Mettre à jour un payment\n4. Supprimer un payment\n5. Retour");
+
+                    }else if(choix == 4){
+                        Delete.deletePayment(connection);
+                        System.out.println("\n1. Créer un nouveau payment\n2. Afficher les payments\n3. Mettre à jour un payment\n4. Supprimer un payment\n5. Retour");
+
+                    }else if(choix == 5){
+                        System.out.println("Quitter");
+                        valide = true;
+                    }
+                }else {
+                    System.err.println("Erreur: Le nombre choisi ne correspond à aucun choix proposé !!!");
+                }
+
+            }else {
+                System.err.println("Erreur: Ceci n'est pas un nombre !!!");
+            }
+        }
+    }
+
+    public static void choiceRental(Connection connection) throws SQLException{
+        System.out.println("\n1. Créer un nouveau rental\n2. Afficher les rentals\n3. Mettre à jour un rental\n4. Supprimer un rental\n5. Retour");
+        System.out.println("Entrez votre choix :");
+        Scanner choice = new Scanner(System.in);
+
+        boolean valide = false;
+        while(!valide) {
+            if (choice.hasNextInt()){
+                int choix = choice.nextInt();
+                if(choix <= 5 || choix >= 1){
+                    if(choix == 1){
+                        Add.addRental(connection);
+                        System.out.println("\n1. Créer un nouveau rental\n2. Afficher les rentals\n3. Mettre à jour un rental\n4. Supprimer un rental\n5. Retour");
+
+                    }else if(choix == 2){
+                        Affiche.afficheRental(connection);
+                        System.out.println("\n1. Créer un nouveau rental\n2. Afficher les rentals\n3. Mettre à jour un rental\n4. Supprimer un rental\n5. Retour");
+
+                    }else if(choix == 3){
+                        Update.updateRental(connection);
+                        System.out.println("\n1. Créer un nouveau rental\n2. Afficher les rentals\n3. Mettre à jour un rental\n4. Supprimer un rental\n5. Retour");
+
+                    }else if(choix == 4){
+                        Delete.deleteRental(connection);
+                        System.out.println("\n1. Créer un nouveau rental\n2. Afficher les rentals\n3. Mettre à jour un rental\n4. Supprimer un rental\n5. Retour");
+
+                    }else if(choix == 5){
+                        System.out.println("Quitter");
+                        valide = true;
+                    }
+                }else {
+                    System.err.println("Erreur: Le nombre choisi ne correspond à aucun choix proposé !!!");
+                }
+
+            }else {
+                System.err.println("Erreur: Ceci n'est pas un nombre !!!");
+            }
+        }
+    }
+
+
+    public static void choiceStaff(Connection connection) throws SQLException{
+        System.out.println("\n1. Créer un nouveau staff\n2. Afficher les staffs\n3. Mettre à jour un staff\n4. Supprimer un staff\n5. Retour");
+        System.out.println("Entrez votre choix :");
+        Scanner choice = new Scanner(System.in);
+
+        boolean valide = false;
+        while(!valide) {
+            if (choice.hasNextInt()){
+                int choix = choice.nextInt();
+                if(choix <= 5 || choix >= 1){
+                    if(choix == 1){
+                        Add.addStaff(connection);
+                        System.out.println("\n1. Créer un nouveau staff\n2. Afficher les staffs\n3. Mettre à jour un staff\n4. Supprimer un staff\n5. Retour");
+
+                    }else if(choix == 2){
+                        Affiche.afficheStaff(connection);
+                        System.out.println("\n1. Créer un nouveau staff\n2. Afficher les staffs\n3. Mettre à jour un staff\n4. Supprimer un staff\n5. Retour");
+
+                    }else if(choix == 3){
+                        Update.updateStaff(connection);
+                        System.out.println("\n1. Créer un nouveau staff\n2. Afficher les staffs\n3. Mettre à jour un staff\n4. Supprimer un staff\n5. Retour");
+
+                    }else if(choix == 4){
+                        Delete.deleteStaff(connection);
+                        System.out.println("\n1. Créer un nouveau staff\n2. Afficher les staffs\n3. Mettre à jour un staff\n4. Supprimer un staff\n5. Retour");
+
+                    }else if(choix == 5){
+                        System.out.println("Quitter");
+                        valide = true;
+                    }
+                }else {
+                    System.err.println("Erreur: Le nombre choisi ne correspond à aucun choix proposé !!!");
+                }
+
+            }else {
+                System.err.println("Erreur: Ceci n'est pas un nombre !!!");
+            }
+        }
+    }
+
+
+    public static void choiceStore(Connection connection) throws SQLException{
+        System.out.println("\n1. Créer un nouveau store\n2. Afficher les stores\n3. Mettre à jour un store\n4. Supprimer un store\n5. Retour");
+        System.out.println("Entrez votre choix :");
+        Scanner choice = new Scanner(System.in);
+
+        boolean valide = false;
+        while(!valide) {
+            if (choice.hasNextInt()){
+                int choix = choice.nextInt();
+                if(choix <= 5 || choix >= 1){
+                    if(choix == 1){
+                        Add.addStore(connection);
+                        System.out.println("\n1. Créer un nouveau store\n2. Afficher les stores\n3. Mettre à jour un store\n4. Supprimer un store\n5. Retour");
+
+                    }else if(choix == 2){
+                        Affiche.afficheStore(connection);
+                        System.out.println("\n1. Créer un nouveau store\n2. Afficher les stores\n3. Mettre à jour un store\n4. Supprimer un store\n5. Retour");
+
+                    }else if(choix == 3){
+                        Update.updateStore(connection);
+                        System.out.println("\n1. Créer un nouveau store\n2. Afficher les stores\n3. Mettre à jour un store\n4. Supprimer un store\n5. Retour");
+
+                    }else if(choix == 4){
+                        Delete.deleteStore(connection);
+                        System.out.println("\n1. Créer un nouveau store\n2. Afficher les stores\n3. Mettre à jour un store\n4. Supprimer un store\n5. Retour");
+
+                    }else if(choix == 5){
+                        System.out.println("Quitter");
+                        valide = true;
+                    }
+                }else {
+                    System.err.println("Erreur: Le nombre choisi ne correspond à aucun choix proposé !!!");
+                }
+
+            }else {
+                System.err.println("Erreur: Ceci n'est pas un nombre !!!");
+            }
+        }
+    }
 }
